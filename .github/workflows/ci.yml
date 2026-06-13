@@ -30,6 +30,8 @@ jobs:
           python3 hooks/session_start_context.py | python3 -m json.tool >/tmp/session-start-json-ok
       - name: Run unsupported claim demo
         run: python3 scripts/run_claim_demo.py
+      - name: Validate artifact QA regression checks
+        run: python3 scripts/validate_artifact_qa.py
       - name: Run jobqa CLI demo
         run: ./bin/jobqa demo
       - name: Run jobqa CLI happy path
