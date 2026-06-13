@@ -28,7 +28,7 @@ manual/browser/email action
 
 - `.agents/skills/job-application-quality/SKILL.md`: canonical Open Agent Skill router for multi-CLI use.
 - `skills/job-application-quality-gate/SKILL.md`: Codex plugin compatibility wrapper.
-- `.codex-plugin/plugin.json` and `.app.json`: Codex plugin/app package metadata.
+- `.codex-plugin/plugin.json` and `.app.json`: Codex plugin metadata plus optional app manifest companion metadata.
 - `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`: Claude plugin package metadata.
 - `.claude/skills/job-application-quality/SKILL.md` and `.qwen/skills/job-application-quality/SKILL.md`: CLI-specific wrappers that point to the canonical skill.
 - `schemas/`: JSON schemas for reusable data contracts.

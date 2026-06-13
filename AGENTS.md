@@ -81,7 +81,7 @@ Codex plugin compatibility is kept through:
 
 - `skills/job-application-quality-gate/SKILL.md`
 
-Codex app compatibility is kept through:
+Codex plugin and optional app manifest companion compatibility is kept through:
 
 - `.codex-plugin/plugin.json`
 - `.app.json`

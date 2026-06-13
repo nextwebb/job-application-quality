@@ -9,8 +9,8 @@ Releases should be small, auditable, and safety-forward.
 - [ ] Schema fixtures validate.
 - [ ] No-invented-claims checks pass.
 - [ ] Sponsorship and remote hard-fail tests pass.
-- [ ] Codex app metadata validates.
-- [ ] Repo marketplace metadata validates.
+- [ ] Codex plugin and optional app manifest companion metadata validates.
+- [ ] Custom repo marketplace metadata validates.
 - [ ] Claude plugin metadata validates.
 - [ ] Multi-CLI wrappers validate.
 - [ ] Plugin hooks validate.

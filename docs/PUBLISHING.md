@@ -7,22 +7,23 @@ This project follows the official Codex plugin packaging model.
 - `.codex-plugin/plugin.json` exists and identifies the plugin.
 - `skills/` contains Codex-compatible skill wrappers.
 - `.agents/skills/` contains the canonical Open Agent Skill router.
-- `.app.json` maps the Codex app integration.
+- `.app.json` provides optional app manifest companion metadata for the Codex plugin.
 - `hooks/hooks.json` contains optional lifecycle hooks.
 - `assets/` contains install-surface assets.
-- `.agents/plugins/marketplace.json` exposes the plugin as a repo marketplace.
+- `.agents/plugins/marketplace.json` exposes the plugin as a custom repo marketplace path.
 - `.claude-plugin/` exposes Claude plugin metadata.
 - validators and CI cover the package metadata.
 
-## Repo Marketplace
+## Custom Repo Marketplace Path
 
-The repo marketplace lives at:
+The custom repo marketplace path lives at:
 
 ```text
 .agents/plugins/marketplace.json
 ```
 
 It points to the GitHub repository root because this plugin lives at the root of the repo.
+This is repository-scoped marketplace metadata, not a curated marketplace listing.
 
 Users can add it with:
 
