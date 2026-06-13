@@ -159,6 +159,20 @@ def validate_cli(errors: list[str]) -> None:
     require_file(ROOT / "examples" / "basic" / "artifacts" / "cv.txt", errors)
 
 
+def validate_pages_site(errors: list[str]) -> None:
+    for path in (
+        ".github/workflows/pages.yml",
+        "site/.nojekyll",
+        "site/index.html",
+        "site/styles.css",
+        "site/script.js",
+        "site/assets/icon.svg",
+        "site/assets/logo.svg",
+        "scripts/validate_site.py",
+    ):
+        require_file(ROOT / path, errors)
+
+
 def validate() -> list[str]:
     errors: list[str] = []
     validate_codex_app(errors)
@@ -167,6 +181,7 @@ def validate() -> list[str]:
     validate_hooks(errors)
     validate_docs(errors)
     validate_cli(errors)
+    validate_pages_site(errors)
     return errors
 
 
