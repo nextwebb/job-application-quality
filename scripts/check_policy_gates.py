@@ -4,11 +4,124 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 from common import load_json
 from validate_role_intake import validate as validate_role
 from validate_tenant_profile import validate as validate_profile
+
+
+GLOBAL_REMOTE_REGIONS = {"global", "worldwide", "world", "anywhere"}
+
+REGION_ALIASES = {
+    "anywhere": "global",
+    "eu": "eu",
+    "eu only": "eu",
+    "european union": "eu",
+    "global": "global",
+    "remote worldwide": "worldwide",
+    "uk": "uk",
+    "united kingdom": "uk",
+    "us": "us",
+    "usa": "us",
+    "united states": "us",
+    "world": "worldwide",
+    "worldwide": "worldwide",
+}
+
+EU_COUNTRIES = (
+    "austria",
+    "belgium",
+    "bulgaria",
+    "croatia",
+    "cyprus",
+    "czechia",
+    "denmark",
+    "estonia",
+    "finland",
+    "france",
+    "germany",
+    "greece",
+    "hungary",
+    "ireland",
+    "italy",
+    "latvia",
+    "lithuania",
+    "luxembourg",
+    "malta",
+    "netherlands",
+    "poland",
+    "portugal",
+    "romania",
+    "slovakia",
+    "slovenia",
+    "spain",
+    "sweden",
+)
+
+COUNTRY_REGIONS = {country: {"eu", "europe", "emea"} for country in EU_COUNTRIES}
+COUNTRY_REGIONS.update(
+    {
+        # EMEA includes Africa; this is intentionally broader than EU eligibility.
+        "nigeria": {"africa", "emea"},
+        "united kingdom": {"uk", "europe", "emea"},
+        "united states": {"us", "north america", "americas"},
+    }
+)
+
+COUNTRY_ALIASES = {country: country for country in COUNTRY_REGIONS}
+COUNTRY_ALIASES.update(
+    {
+        "czech republic": "czechia",
+        "gb": "united kingdom",
+        "great britain": "united kingdom",
+        "holland": "netherlands",
+        "ng": "nigeria",
+        "republic of ireland": "ireland",
+        "the netherlands": "netherlands",
+        "u k": "united kingdom",
+        "u s": "united states",
+        "u s a": "united states",
+        "uk": "united kingdom",
+        "united states of america": "united states",
+        "usa": "united states",
+    }
+)
+
+
+def normalize_label(value: object) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", str(value).lower())).strip()
+
+
+def normalize_region(value: object) -> str:
+    label = normalize_label(value)
+    return REGION_ALIASES.get(label, label)
+
+
+def candidate_country(profile: dict) -> str | None:
+    location = profile.get("contact", {}).get("current_location")
+    if not isinstance(location, str):
+        return None
+
+    labels = [normalize_label(part) for part in reversed(location.split(","))]
+    labels.append(normalize_label(location))
+    for label in labels:
+        if label in COUNTRY_ALIASES:
+            return COUNTRY_ALIASES[label]
+
+    full_location = f" {normalize_label(location)} "
+    for alias, country in sorted(COUNTRY_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
+        if f" {alias} " in full_location:
+            return country
+    return None
+
+
+def add_remote_region_result(message: str, strict: bool, errors: list[str], warnings: list[str]) -> None:
+    if strict:
+        errors.append(message)
+    else:
+        warnings.append(message)
 
 
 def check(profile: dict, role: dict) -> dict:
@@ -32,14 +145,40 @@ def check(profile: dict, role: dict) -> dict:
         errors.append("Sponsorship is unknown for a role that may require work authorization support")
 
     remote = role.get("remote", {})
-    if policy.get("skip_if_remote_country_unverified") and remote.get("status") == "unknown":
+    strict_remote_country = bool(policy.get("skip_if_remote_country_unverified"))
+    if strict_remote_country and remote.get("status") == "unknown":
         errors.append("Remote eligibility is unknown")
     if remote.get("status") == "regional":
-        regions = {r.lower() for r in remote.get("allowed_regions", [])}
+        raw_regions = [str(r) for r in remote.get("allowed_regions", []) if str(r).strip()]
+        regions = {normalize_region(r) for r in raw_regions}
         if not regions:
             errors.append("Regional remote role has no allowed regions")
-        elif "global" not in regions and not any(r in regions for r in ["emea", "eu", "uk", "africa", "worldwide"]):
-            warnings.append("Regional remote role may not include tenant location")
+        elif not (regions & GLOBAL_REMOTE_REGIONS):
+            country = candidate_country(profile)
+            if not country:
+                add_remote_region_result(
+                    "Remote eligibility cannot be verified because tenant country is unknown",
+                    strict_remote_country,
+                    errors,
+                    warnings,
+                )
+            else:
+                candidate_regions = COUNTRY_REGIONS.get(country, set())
+                if not candidate_regions:
+                    add_remote_region_result(
+                        f"Remote eligibility cannot be verified for tenant country '{country}'",
+                        strict_remote_country,
+                        errors,
+                        warnings,
+                    )
+                elif not (regions & candidate_regions):
+                    add_remote_region_result(
+                        "Remote eligibility mismatch: "
+                        f"tenant country '{country}' is not included in allowed regions {raw_regions}",
+                        strict_remote_country,
+                        errors,
+                        warnings,
+                    )
 
     result = {
         "status": "fail" if errors else "pass",
@@ -65,4 +204,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
