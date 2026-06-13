@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 - 2026-06-13
+
+### Added
+
+- "Why this exists" README diagram that positions the project as a preflight QA layer.
+- Runnable unsupported-claim demo under `examples/claim-demo/`.
+- `scripts/run_claim_demo.py` for a one-command proof of unsupported claim blocking.
+- Artifact QA truth/evidence checks for forbidden claims, missing required-skill evidence, and supported role matches.
+
+### Changed
+
+- README now uses the "Preflight checks for AI-generated job applications" positioning.
+- CI now runs the unsupported-claim demo.
+
 ## 0.4.0 - 2026-06-13
 
 ### Added

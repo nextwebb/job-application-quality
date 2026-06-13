@@ -1,0 +1,47 @@
+{
+  "tenant_id": "claim_demo",
+  "candidate_name": "Claim Demo Candidate",
+  "canonical_facts_version": "v1",
+  "contact": {
+    "email": "candidate@example.com",
+    "current_location": "Lagos, Nigeria"
+  },
+  "work_authorization": {
+    "current_country": "authorized",
+    "requires_sponsorship_for_eu_uk_us": true,
+    "global_remote_contractor": true
+  },
+  "application_policy": {
+    "allowed_ats": ["ashby", "greenhouse", "lever"],
+    "skip_if_sponsorship_unavailable": true,
+    "skip_if_sponsorship_unknown_for_relocation": true,
+    "skip_if_remote_country_unverified": true,
+    "requires_explicit_submit_approval": true
+  },
+  "baseline_artifacts": [
+    {
+      "artifact_id": "generated_cv_with_bad_claim",
+      "type": "cv",
+      "path": "artifacts/generated-cv.txt",
+      "role_family": "platform"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "aws_lambda",
+      "text": "Built serverless APIs on AWS Lambda.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "platform", "aws"]
+    },
+    {
+      "claim_id": "python",
+      "text": "Built production Python services.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "platform"]
+    }
+  ],
+  "forbidden_claims": [
+    "Built Kubernetes production clusters",
+    "Kubernetes experience"
+  ]
+}
