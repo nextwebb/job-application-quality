@@ -1,0 +1,46 @@
+{
+  "tenant_id": "basic_candidate",
+  "candidate_name": "Basic Candidate",
+  "canonical_facts_version": "v1",
+  "contact": {
+    "email": "candidate@example.com",
+    "current_location": "Lagos, Nigeria",
+    "linkedin": "https://www.linkedin.com/in/basic-candidate",
+    "github": "https://github.com/basic-candidate"
+  },
+  "work_authorization": {
+    "current_country": "authorized",
+    "requires_sponsorship_for_eu_uk_us": true,
+    "global_remote_contractor": true
+  },
+  "application_policy": {
+    "allowed_ats": ["ashby", "greenhouse", "lever"],
+    "skip_if_sponsorship_unavailable": true,
+    "skip_if_sponsorship_unknown_for_relocation": true,
+    "skip_if_remote_country_unverified": true,
+    "requires_explicit_submit_approval": true
+  },
+  "baseline_artifacts": [
+    {
+      "artifact_id": "basic_cv",
+      "type": "cv",
+      "path": "artifacts/cv.txt",
+      "role_family": "backend"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "python",
+      "text": "Built production Python services.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "platform"]
+    },
+    {
+      "claim_id": "aws_lambda",
+      "text": "Built serverless APIs on AWS Lambda.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "aws"]
+    }
+  ],
+  "forbidden_claims": ["Kubernetes expert", "US citizen", "PhD"]
+}

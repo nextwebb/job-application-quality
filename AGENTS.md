@@ -114,6 +114,8 @@ python3 scripts/validate_role_intake.py examples/role-intake.valid.json
 python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
 python3 scripts/validate_multi_cli_support.py
 python3 scripts/validate_package_metadata.py
+./bin/jobqa demo
+rm -rf /tmp/jobqa-basic && cp -R examples/basic /tmp/jobqa-basic && ./bin/jobqa run /tmp/jobqa-basic
 python3 scripts/prepare_application_packet.py examples/tenant/profile.valid.json examples/role-intake.valid.json /tmp/application-packet
 python3 scripts/qa_artifacts.py /tmp/application-packet/manifest.json
 python3 /Users/nextwebb/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .

@@ -86,7 +86,7 @@ Most tools focus on generating more applications. This project owns the step bef
 Run:
 
 ```bash
-python3 scripts/run_claim_demo.py
+./bin/jobqa demo
 ```
 
 The demo creates a packet where the candidate facts and generated CV disagree:
@@ -123,6 +123,20 @@ git clone https://github.com/nextwebb/job-application-quality.git
 cd job-application-quality
 ```
 
+Run the fastest demo:
+
+```bash
+./bin/jobqa demo
+```
+
+Create and check a tiny application workspace:
+
+```bash
+./bin/jobqa init /tmp/my-application
+./bin/jobqa run /tmp/my-application
+./bin/jobqa report /tmp/my-application/output/manifest.json --format markdown
+```
+
 Run the built-in checks:
 
 ```bash
@@ -136,7 +150,7 @@ python3 scripts/validate_package_metadata.py
 Run the claim-support demo:
 
 ```bash
-python3 scripts/run_claim_demo.py
+./bin/jobqa demo
 ```
 
 Prepare and QA a sample packet:
@@ -231,6 +245,13 @@ The root `AGENTS.md` contains repository-wide rules for any coding-agent CLI. Se
 ## Core Commands
 
 ```bash
+# Public CLI
+./bin/jobqa demo
+./bin/jobqa init <dir>
+./bin/jobqa run <dir>
+./bin/jobqa qa <dir>/output/manifest.json
+./bin/jobqa report <dir>/output/manifest.json --format markdown
+
 # Validate candidate profile structure
 python3 scripts/validate_tenant_profile.py <profile.json>
 
@@ -379,6 +400,7 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 
 - [Product scope](docs/PRODUCT_SCOPE.md)
 - [Install](docs/INSTALL.md)
+- [CLI](docs/CLI.md)
 - [Codex app](docs/CODEX_APP.md)
 - [Claude plugin](docs/CLAUDE_PLUGIN.md)
 - [Publishing](docs/PUBLISHING.md)
@@ -398,6 +420,7 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 - **Plugin runtime**: Codex plugin manifest, Open Agent Skill files, and CLI wrappers
 - **App packaging**: Codex `.app.json` and Claude `.claude-plugin` metadata
 - **Workflow scripts**: Python 3.11+, dependency-free standard library
+- **CLI**: `bin/jobqa` and `scripts/jobqa.py`
 - **Contracts**: JSON schemas and example fixtures
 - **Quality checks**: Local scripts plus GitHub Actions CI
 - **Data storage**: Local files owned by the user

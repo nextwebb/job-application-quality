@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 - 2026-06-13
+
+### Added
+
+- `jobqa` CLI with `demo`, `init`, `run`, `qa`, and `report` commands.
+- `bin/jobqa` executable wrapper.
+- `examples/basic/` simple passing workspace.
+- CLI documentation.
+- CI coverage for CLI demo, happy path, and failure path.
+
+### Changed
+
+- README quick start now leads with the `jobqa` CLI.
+
 ## 0.5.0 - 2026-06-13
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "job-application-quality",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Installable Codex plugin for reusable multi-tenant job application quality gates, packets, QA, hooks, and multi-CLI agent workflows.",
   "author": {
     "name": "Nextwebb",
@@ -41,6 +41,6 @@
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/logo.svg",
-    "defaultPrompt": "Use Job Application Quality to prepare a role-specific application packet with canonical facts, QA, and a submission checklist."
+    "defaultPrompt": "Use jobqa to run preflight QA on this application packet before submission."
   }
 }

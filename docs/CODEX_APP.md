@@ -32,4 +32,4 @@ python3 scripts/validate_package_metadata.py
 
 ## Default Prompt
 
-Use Job Application Quality to prepare a role-specific application packet with canonical facts, QA, and a submission checklist.
+Use jobqa to run preflight QA on this application packet before submission.
