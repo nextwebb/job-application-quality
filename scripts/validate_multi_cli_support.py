@@ -67,6 +67,7 @@ def validate() -> list[str]:
         for token in (
             ".agents/skills/job-application-quality/SKILL.md",
             "Do not invent",
+            "Global Project Memory",
             "Validation Before Release",
         ):
             if token not in agents_content:

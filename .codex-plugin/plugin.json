@@ -1,11 +1,12 @@
 {
   "name": "job-application-quality",
-  "version": "0.2.0",
-  "description": "Reusable multi-tenant quality gates for job-application packets, CVs, cover letters, recruiter emails, browser-assisted submissions, and multi-CLI agent workflows.",
+  "version": "0.3.0+codex.20260613002646",
+  "description": "Installable Codex app and Claude plugin for reusable multi-tenant job application quality gates, packets, QA, and multi-CLI agent workflows.",
   "author": {
     "name": "Nextwebb"
   },
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Job Application Quality",
     "shortDescription": "Quality-first job application workflow with canonical facts and submission gates.",
@@ -14,6 +15,8 @@
     "category": "Productivity",
     "capabilities": [
       "Skills",
+      "Codex app",
+      "Claude plugin",
       "Open Agent Skill",
       "Multi-CLI routing",
       "Local scripts",

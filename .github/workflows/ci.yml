@@ -20,6 +20,8 @@ jobs:
         run: python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
       - name: Validate multi-CLI support
         run: python3 scripts/validate_multi_cli_support.py
+      - name: Validate package metadata
+        run: python3 scripts/validate_package_metadata.py
       - name: Check failing sponsorship gate
         run: |
           if python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.sponsorship-fail.json; then

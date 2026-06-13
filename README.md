@@ -1,6 +1,8 @@
 # Job Application Quality
 
 ![Codex Plugin](https://img.shields.io/badge/Codex-Plugin-111111?style=flat)
+![Codex App](https://img.shields.io/badge/Codex-App-111111?style=flat)
+![Claude Plugin](https://img.shields.io/badge/Claude-Plugin-D97706?style=flat)
 ![Skills](https://img.shields.io/badge/Skills-Enabled-2563eb?style=flat)
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
@@ -39,6 +41,8 @@ The intended user is any candidate, recruiter-assistant workflow, or job-search 
 | Feature | Description |
 | --- | --- |
 | **Codex Skill** | Adds a `job-application-quality-gate` skill for CV, cover letter, email, ATS, and browser-assisted application workflows. |
+| **Codex App Package** | Adds `.app.json` alongside `.codex-plugin/plugin.json` for installable Codex app/plugin packaging. |
+| **Claude Plugin Package** | Adds `.claude-plugin/plugin.json` and marketplace metadata for Claude plugin distribution. |
 | **Open Agent Skill** | Adds a canonical `.agents/skills/job-application-quality/SKILL.md` router for multi-CLI use. |
 | **Multi-Tenant Profiles** | Keeps every candidate in an isolated profile with canonical facts, policy settings, baseline artifacts, and approved claims. |
 | **Role Intake Contract** | Normalizes job details into a small JSON file that can be checked before tailoring begins. |
@@ -65,6 +69,8 @@ Run the built-in checks:
 python3 scripts/validate_tenant_profile.py examples/tenant/profile.valid.json
 python3 scripts/validate_role_intake.py examples/role-intake.valid.json
 python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
+python3 scripts/validate_multi_cli_support.py
+python3 scripts/validate_package_metadata.py
 ```
 
 Prepare and QA a sample packet:
@@ -113,6 +119,25 @@ Codex will follow the skill workflow:
 6. Run artifact QA.
 7. Present a pre-submit checklist.
 8. Stop before email send, final ATS submit, CAPTCHA, identity upload, or legal attestation unless explicitly approved.
+
+For install details, see [docs/INSTALL.md](docs/INSTALL.md) and [docs/CODEX_APP.md](docs/CODEX_APP.md).
+
+## Use With Claude
+
+Claude plugin metadata lives in:
+
+```text
+.claude-plugin/plugin.json
+.claude-plugin/marketplace.json
+```
+
+The Claude skill wrapper lives in:
+
+```text
+.claude/skills/job-application-quality/SKILL.md
+```
+
+See [docs/CLAUDE_PLUGIN.md](docs/CLAUDE_PLUGIN.md).
 
 ## Use With Other Agent CLIs
 
@@ -206,6 +231,10 @@ See [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md) for the detailed contract.
 job-application-quality/
 +-- .codex-plugin/
 |   +-- plugin.json                         # Codex plugin manifest
++-- .app.json                               # Codex app companion manifest
++-- .claude-plugin/
+|   +-- plugin.json                         # Claude plugin metadata
+|   +-- marketplace.json                    # Claude marketplace descriptor
 +-- .agents/
 |   +-- skills/job-application-quality/     # Canonical Open Agent Skill
 +-- .claude/
@@ -225,6 +254,7 @@ job-application-quality/
 |   +-- prepare_email_draft.py              # Draft-only recruiter email helper
 |   +-- record_submission.py                # Approved submission log helper
 |   +-- validate_multi_cli_support.py       # Wrapper drift validator
+|   +-- validate_package_metadata.py        # Install/package metadata validator
 +-- schemas/                                # JSON schema contracts
 +-- examples/                               # Passing and failing fixtures
 +-- evals/
@@ -268,17 +298,24 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 ## Documentation
 
 - [Product scope](docs/PRODUCT_SCOPE.md)
+- [Install](docs/INSTALL.md)
+- [Codex app](docs/CODEX_APP.md)
+- [Claude plugin](docs/CLAUDE_PLUGIN.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data contracts](docs/DATA_CONTRACT.md)
+- [Root data contract](DATA_CONTRACT.md)
 - [Quality gates](docs/QUALITY_GATES.md)
 - [Multi-CLI support](docs/MULTI_CLI.md)
 - [Submission policy](docs/SUBMISSION_POLICY.md)
 - [Security and privacy](docs/SECURITY_AND_PRIVACY.md)
 - [Release process](docs/RELEASE_PROCESS.md)
+- [Engineering rules](docs/ENGINEERING_RULES.md)
+- [Documentation rules](docs/DOCUMENTATION_RULES.md)
 
 ## Tech Stack
 
 - **Plugin runtime**: Codex plugin manifest, Open Agent Skill files, and CLI wrappers
+- **App packaging**: Codex `.app.json` and Claude `.claude-plugin` metadata
 - **Workflow scripts**: Python 3.11+, dependency-free standard library
 - **Contracts**: JSON schemas and example fixtures
 - **Quality checks**: Local scripts plus GitHub Actions CI
@@ -310,6 +347,14 @@ Contributions should make the workflow safer, more reusable, or easier to verify
 - Better documentation and release checks.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Project governance and community rules:
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Governance](GOVERNANCE.md)
+- [Support](SUPPORT.md)
+- [Security](SECURITY.md)
+- [Trademark policy](TRADEMARK.md)
 
 ## License
 
