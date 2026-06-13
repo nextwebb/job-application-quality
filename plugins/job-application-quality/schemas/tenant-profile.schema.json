@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TenantProfile",
+  "type": "object",
+  "required": ["tenant_id", "candidate_name", "canonical_facts_version", "contact", "work_authorization", "application_policy", "claims"],
+  "properties": {
+    "tenant_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$" },
+    "candidate_name": { "type": "string", "minLength": 1 },
+    "canonical_facts_version": { "type": "string", "minLength": 1 },
+    "contact": {
+      "type": "object",
+      "required": ["email", "current_location"],
+      "properties": {
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "current_location": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "github": { "type": "string" },
+        "portfolio": { "type": "string" }
+      }
+    },
+    "work_authorization": { "type": "object" },
+    "application_policy": { "type": "object" },
+    "baseline_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "type", "path", "role_family"],
+        "properties": {
+          "artifact_id": { "type": "string" },
+          "type": { "enum": ["cv", "cover_letter", "resume"] },
+          "path": { "type": "string" },
+          "role_family": { "type": "string" }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text", "confidence"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "text": { "type": "string" },
+          "confidence": { "enum": ["verified", "user_approved", "inferred", "blocked"] },
+          "allowed_contexts": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "forbidden_claims": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

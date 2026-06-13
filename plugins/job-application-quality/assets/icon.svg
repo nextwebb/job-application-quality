@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Job Application Quality icon</title>
+  <desc id="desc">A shield with a checkmark over a document.</desc>
+  <rect width="128" height="128" rx="24" fill="#0F766E"/>
+  <path d="M64 18 96 30v28c0 24-13 42-32 52-19-10-32-28-32-52V30l32-12Z" fill="#ECFDF5"/>
+  <path d="M50 62l10 10 21-24" fill="none" stroke="#0F766E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M45 85h38" stroke="#0F766E" stroke-width="6" stroke-linecap="round"/>
+</svg>
