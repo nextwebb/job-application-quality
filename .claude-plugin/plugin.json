@@ -1,0 +1,16 @@
+{
+  "name": "job-application-quality",
+  "version": "0.3.0",
+  "description": "Local-first job application quality gates for truthful packets, manifests, QA, and safe submission workflows.",
+  "author": {
+    "name": "Nextwebb",
+    "url": "https://github.com/nextwebb"
+  },
+  "skills": true,
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(git:*)"
+    ]
+  }
+}

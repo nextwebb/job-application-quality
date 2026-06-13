@@ -129,6 +129,7 @@ python3 scripts/validate_tenant_profile.py examples/tenant/profile.valid.json
 python3 scripts/validate_role_intake.py examples/role-intake.valid.json
 python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
 python3 scripts/validate_multi_cli_support.py
+python3 scripts/validate_package_metadata.py
 python3 /Users/nextwebb/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 python3 /Users/nextwebb/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/job-application-quality-gate
 ```

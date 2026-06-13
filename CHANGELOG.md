@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.3.0 - 2026-06-13
+
+### Added
+
+- Codex app companion manifest with plugin metadata wiring.
+- Claude plugin metadata and marketplace descriptor.
+- Install, Codex app, and Claude plugin documentation.
+- Root data contract, governance, code of conduct, trademark, contributors, and citation files.
+- GitHub issue templates and pull request template.
+- Engineering and documentation rules as project memory.
+- Package metadata validator and CI coverage.
+
+### Changed
+
+- Plugin metadata now advertises Codex app and Claude plugin packaging.
+- Root `AGENTS.md` now includes global project memory for coding, engineering, and documentation rules.
+
 ## 0.2.0 - 2026-06-13
 
 ### Added
