@@ -16,8 +16,8 @@ jobs:
         run: python3 scripts/validate_tenant_profile.py examples/tenant/profile.valid.json
       - name: Validate example role
         run: python3 scripts/validate_role_intake.py examples/role-intake.valid.json
-      - name: Check passing policy gates
-        run: python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
+      - name: Validate policy gate regressions
+        run: python3 scripts/validate_policy_gates.py
       - name: Validate multi-CLI support
         run: python3 scripts/validate_multi_cli_support.py
       - name: Validate package metadata

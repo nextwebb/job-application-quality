@@ -1,0 +1,20 @@
+{
+  "role_id": "sample-worldwide-remote",
+  "company": "Example Worldwide",
+  "title": "Senior Backend Engineer",
+  "job_url": "https://jobs.ashbyhq.com/example-worldwide/sample",
+  "ats": "ashby",
+  "source_timestamp": "2026-06-13T00:00:00Z",
+  "location": "Remote Worldwide",
+  "remote": {
+    "status": "regional",
+    "allowed_regions": ["Worldwide"]
+  },
+  "sponsorship": {
+    "status": "not_required",
+    "evidence": "Posting states the role is open worldwide."
+  },
+  "required_skills": ["Python"],
+  "preferred_skills": [],
+  "required_questions": []
+}
