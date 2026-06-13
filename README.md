@@ -39,6 +39,7 @@ The intended user is any candidate, recruiter-assistant workflow, or job-search 
 | Feature | Description |
 | --- | --- |
 | **Codex Skill** | Adds a `job-application-quality-gate` skill for CV, cover letter, email, ATS, and browser-assisted application workflows. |
+| **Open Agent Skill** | Adds a canonical `.agents/skills/job-application-quality/SKILL.md` router for multi-CLI use. |
 | **Multi-Tenant Profiles** | Keeps every candidate in an isolated profile with canonical facts, policy settings, baseline artifacts, and approved claims. |
 | **Role Intake Contract** | Normalizes job details into a small JSON file that can be checked before tailoring begins. |
 | **Policy Gates** | Blocks unsupported ATS values, unavailable sponsorship, unknown sponsorship for relocation-sensitive roles, and unverified remote eligibility. |
@@ -112,6 +113,23 @@ Codex will follow the skill workflow:
 6. Run artifact QA.
 7. Present a pre-submit checklist.
 8. Stop before email send, final ATS submit, CAPTCHA, identity upload, or legal attestation unless explicitly approved.
+
+## Use With Other Agent CLIs
+
+The canonical Open Agent Skill lives at:
+
+```text
+.agents/skills/job-application-quality/SKILL.md
+```
+
+Claude Code and Qwen wrappers point to that file:
+
+```text
+.claude/skills/job-application-quality/SKILL.md
+.qwen/skills/job-application-quality/SKILL.md
+```
+
+The root `AGENTS.md` contains repository-wide rules for any coding-agent CLI. See [docs/MULTI_CLI.md](docs/MULTI_CLI.md).
 
 ## Core Commands
 
@@ -188,9 +206,15 @@ See [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md) for the detailed contract.
 job-application-quality/
 +-- .codex-plugin/
 |   +-- plugin.json                         # Codex plugin manifest
++-- .agents/
+|   +-- skills/job-application-quality/     # Canonical Open Agent Skill
++-- .claude/
+|   +-- skills/job-application-quality/     # Claude wrapper
++-- .qwen/
+|   +-- skills/job-application-quality/     # Qwen wrapper
 +-- skills/
 |   +-- job-application-quality-gate/
-|       +-- SKILL.md                        # Main Codex skill instructions
+|       +-- SKILL.md                        # Codex plugin compatibility wrapper
 |       +-- references/                     # Policy, browser, email, and artifact QA guidance
 +-- scripts/
 |   +-- validate_tenant_profile.py          # Tenant profile validator
@@ -200,6 +224,7 @@ job-application-quality/
 |   +-- qa_artifacts.py                     # Artifact QA checks
 |   +-- prepare_email_draft.py              # Draft-only recruiter email helper
 |   +-- record_submission.py                # Approved submission log helper
+|   +-- validate_multi_cli_support.py       # Wrapper drift validator
 +-- schemas/                                # JSON schema contracts
 +-- examples/                               # Passing and failing fixtures
 +-- evals/
@@ -246,13 +271,14 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data contracts](docs/DATA_CONTRACT.md)
 - [Quality gates](docs/QUALITY_GATES.md)
+- [Multi-CLI support](docs/MULTI_CLI.md)
 - [Submission policy](docs/SUBMISSION_POLICY.md)
 - [Security and privacy](docs/SECURITY_AND_PRIVACY.md)
 - [Release process](docs/RELEASE_PROCESS.md)
 
 ## Tech Stack
 
-- **Plugin runtime**: Codex plugin manifest and skill files
+- **Plugin runtime**: Codex plugin manifest, Open Agent Skill files, and CLI wrappers
 - **Workflow scripts**: Python 3.11+, dependency-free standard library
 - **Contracts**: JSON schemas and example fixtures
 - **Quality checks**: Local scripts plus GitHub Actions CI

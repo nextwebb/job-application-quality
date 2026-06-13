@@ -1,11 +1,20 @@
 ---
 name: job-application-quality-gate
-description: Use when preparing, tailoring, QAing, emailing, or submitting job application materials, including CVs, resumes, cover letters, recruiter emails, ATS uploads, sponsorship checks, remote-work eligibility checks, application packets, and browser-assisted application forms.
+description: Codex compatibility wrapper for the canonical Job Application Quality Open Agent Skill.
+license: MIT
 ---
 
 # Job Application Quality Gate
 
-Use this skill to keep job applications truthful, role-specific, and submission-safe.
+This Codex plugin skill is a compatibility wrapper.
+
+Before acting, read and follow the canonical Open Agent Skill:
+
+```text
+.agents/skills/job-application-quality/SKILL.md
+```
+
+Use this wrapper when Codex discovers plugin skills from `skills/`, but treat the `.agents` skill as the source of truth for mode routing, non-negotiables, context loading, preferred scripts, and pre-submit checks.
 
 ## Non-Negotiables
 
@@ -57,4 +66,3 @@ Before upload/send/submit:
 - Sponsorship, remote, and location gates pass.
 - Sensitive fields are not required or have explicit user review.
 - Current user approval names the destination and action.
-
