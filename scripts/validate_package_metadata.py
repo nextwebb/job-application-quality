@@ -81,9 +81,22 @@ def validate_codex_app(errors: list[str]) -> None:
         if key not in plugin:
             errors.append(f".codex-plugin/plugin.json missing {key}")
     interface = plugin.get("interface", {})
-    for key in ("websiteURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor", "composerIcon", "logo"):
+    for key in (
+        "websiteURL",
+        "privacyPolicyURL",
+        "termsOfServiceURL",
+        "brandColor",
+        "composerIcon",
+        "logo",
+        "defaultPrompt",
+    ):
         if key not in interface:
             errors.append(f".codex-plugin/plugin.json interface missing {key}")
+    default_prompt = interface.get("defaultPrompt")
+    if not isinstance(default_prompt, list) or not all(
+        isinstance(value, str) and value.strip() for value in default_prompt
+    ):
+        errors.append(".codex-plugin/plugin.json interface.defaultPrompt must be an array of strings")
     for key in ("composerIcon", "logo"):
         raw_path = interface.get(key)
         if isinstance(raw_path, str) and raw_path.startswith("./"):

@@ -41,6 +41,8 @@
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/logo.svg",
-    "defaultPrompt": "Use jobqa to run preflight QA on this application packet before submission."
+    "defaultPrompt": [
+      "Use jobqa to run preflight QA on this application packet before submission."
+    ]
   }
 }
