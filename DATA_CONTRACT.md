@@ -24,7 +24,7 @@ These files are safe to update through normal releases.
 | Path | Purpose |
 | --- | --- |
 | `.codex-plugin/plugin.json` | Codex plugin metadata |
-| `.app.json` | Codex app companion manifest |
+| `.app.json` | Optional app manifest companion metadata for Codex plugin discovery |
 | `.agents/skills/job-application-quality/SKILL.md` | Canonical Open Agent Skill |
 | `.claude/skills/job-application-quality/SKILL.md` | Claude wrapper skill |
 | `.qwen/skills/job-application-quality/SKILL.md` | Qwen wrapper skill |

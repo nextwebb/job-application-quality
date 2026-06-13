@@ -1,7 +1,6 @@
 # Job Application Quality
 
 ![Codex Plugin](https://img.shields.io/badge/Codex-Plugin-111111?style=flat)
-![Codex App](https://img.shields.io/badge/Codex-App-111111?style=flat)
 ![Claude Plugin](https://img.shields.io/badge/Claude-Plugin-D97706?style=flat)
 ![Skills](https://img.shields.io/badge/Skills-Enabled-2563eb?style=flat)
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)
@@ -27,7 +26,7 @@ This is open source and multi-tenant by design.
 
 ## What Is This?
 
-Job Application Quality is a local-first Codex/ChatGPT plugin and skill pack for building truthful, role-specific job application workflows.
+Job Application Quality is a CLI-first, local quality gate distributed as a Codex plugin with reusable skills for building truthful, role-specific job application workflows.
 
 Instead of asking an agent to "just apply," you give it a quality system:
 
@@ -69,9 +68,9 @@ Most tools focus on generating more applications. This project owns the step bef
 
 | Feature | Description |
 | --- | --- |
-| **Codex Skill** | Adds a `job-application-quality-gate` skill for CV, cover letter, email, ATS, and browser-assisted application workflows. |
-| **Codex App Package** | Adds `.app.json` alongside `.codex-plugin/plugin.json` for installable Codex app/plugin packaging. |
-| **Repo Marketplace** | Adds `.agents/plugins/marketplace.json` for repo-scoped Codex installation. |
+| **Codex Plugin Skill** | Adds a `job-application-quality-gate` skill for CV, cover letter, email, ATS, and browser-assisted application workflows. |
+| **Codex Plugin Package** | Uses `.codex-plugin/plugin.json`, reusable skills, hooks, and `.app.json` companion metadata for installable Codex plugin packaging. |
+| **Custom Repo Marketplace Path** | Adds `.agents/plugins/marketplace.json` for repo-scoped Codex installation; this is not a curated marketplace listing. |
 | **Claude Plugin Package** | Adds `.claude-plugin/plugin.json` and marketplace metadata for Claude plugin distribution. |
 | **Plugin Hooks** | Adds a lightweight startup hook that reinforces truthfulness and approval gates. |
 | **Open Agent Skill** | Adds a canonical `.agents/skills/job-application-quality/SKILL.md` router for multi-CLI use. |
@@ -206,9 +205,9 @@ Codex will follow the skill workflow:
 7. Present a pre-submit checklist.
 8. Stop before email send, final ATS submit, CAPTCHA, identity upload, or legal attestation unless explicitly approved.
 
-For install details, see [docs/INSTALL.md](docs/INSTALL.md) and [docs/CODEX_APP.md](docs/CODEX_APP.md).
+For install details, see [docs/INSTALL.md](docs/INSTALL.md) and [docs/CODEX_PLUGIN.md](docs/CODEX_PLUGIN.md).
 
-Install from the repo marketplace:
+Add the custom repo marketplace path in Codex builds that support repository marketplace sources:
 
 ```bash
 codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
@@ -330,9 +329,9 @@ See [docs/DATA_CONTRACT.md](docs/DATA_CONTRACT.md) for the detailed contract.
 job-application-quality/
 +-- .codex-plugin/
 |   +-- plugin.json                         # Codex plugin manifest
-+-- .app.json                               # Codex app companion manifest
++-- .app.json                               # Optional app manifest companion metadata
 +-- .agents/plugins/
-|   +-- marketplace.json                    # Repo marketplace metadata
+|   +-- marketplace.json                    # Custom repo marketplace metadata
 +-- .claude-plugin/
 |   +-- plugin.json                         # Claude plugin metadata
 |   +-- marketplace.json                    # Claude marketplace descriptor
@@ -407,7 +406,7 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 - [Product scope](docs/PRODUCT_SCOPE.md)
 - [Install](docs/INSTALL.md)
 - [CLI](docs/CLI.md)
-- [Codex app](docs/CODEX_APP.md)
+- [Codex plugin](docs/CODEX_PLUGIN.md)
 - [Claude plugin](docs/CLAUDE_PLUGIN.md)
 - [Publishing](docs/PUBLISHING.md)
 - [Architecture](docs/ARCHITECTURE.md)
@@ -424,7 +423,7 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 ## Tech Stack
 
 - **Plugin runtime**: Codex plugin manifest, Open Agent Skill files, and CLI wrappers
-- **App packaging**: Codex `.app.json` and Claude `.claude-plugin` metadata
+- **Package metadata**: Codex `.app.json` companion metadata and Claude `.claude-plugin` metadata
 - **Workflow scripts**: Python 3.11+, dependency-free standard library
 - **CLI**: `bin/jobqa` and `scripts/jobqa.py`
 - **Contracts**: JSON schemas and example fixtures

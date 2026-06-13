@@ -1,35 +1,15 @@
-# Codex App
+# Codex App Terminology
 
-This repository is packaged for Codex through:
+JAQ is not a standalone Codex App.
 
-- `.codex-plugin/plugin.json`
-- `.app.json`
-- `.agents/plugins/marketplace.json`
-- `skills/job-application-quality-gate/SKILL.md`
-- `hooks/hooks.json`
-- `assets/`
+The current product surface is a CLI-first quality gate distributed as a Codex plugin with reusable skills. See [Codex Plugin](CODEX_PLUGIN.md) for the install and packaging contract.
 
-## Contract
+This file remains only so older links do not imply a missing document.
 
-The Codex app/plugin package is local-first. It does not run a hosted backend, collect candidate data, or submit applications by itself.
+## What `.app.json` Means Here
 
-The app metadata exists so Codex can discover the package as a reusable plugin surface. The actual workflow lives in deterministic scripts and skills.
+The `.app.json` file is companion metadata only. It does not make JAQ a standalone Codex App, hosted backend, MCP server, connector, or autonomous job-application product.
 
-The repo marketplace can be added with:
+The actual workflow lives in deterministic scripts, reusable skills, and the Codex plugin manifest.
 
-```bash
-codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
-```
-
-## Validation
-
-Run:
-
-```bash
-python3 /Users/nextwebb/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
-python3 scripts/validate_package_metadata.py
-```
-
-## Default Prompt
-
-Use jobqa to run preflight QA on this application packet before submission.
+Use [docs/CODEX_PLUGIN.md](CODEX_PLUGIN.md) in new documentation links.

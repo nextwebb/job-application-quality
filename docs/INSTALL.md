@@ -2,9 +2,9 @@
 
 Job Application Quality can be used three ways:
 
-1. as a Codex plugin/app package
-2. as a Claude plugin/skill package
-3. as a plain local repository with scripts
+1. as a plain local repository with the `jobqa` CLI
+2. as a Codex plugin package with reusable skills
+3. as a Claude plugin/skill package
 
 ## Codex
 
@@ -14,19 +14,19 @@ The Codex plugin manifest is:
 .codex-plugin/plugin.json
 ```
 
-The Codex app companion manifest is:
+The optional app manifest companion metadata is:
 
 ```text
 .app.json
 ```
 
-The repo marketplace is:
+The custom repo marketplace path is:
 
 ```text
 .agents/plugins/marketplace.json
 ```
 
-Install the repo marketplace with:
+Add the custom repo marketplace path with:
 
 ```bash
 codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Codex app and Claude plugin packaging metadata."""
+"""Validate Codex and Claude plugin packaging metadata."""
 
 from __future__ import annotations
 
@@ -139,6 +139,7 @@ def validate_docs(errors: list[str]) -> None:
         "docs/CLI.md",
         "docs/assets/jaq-site-preview.png",
         "docs/assets/jobqa-dry-run.gif",
+        "docs/CODEX_PLUGIN.md",
         "docs/CODEX_APP.md",
         "docs/CLAUDE_PLUGIN.md",
         "docs/ENGINEERING_RULES.md",
@@ -148,6 +149,39 @@ def validate_docs(errors: list[str]) -> None:
         "bin/jobqa",
     ):
         require_file(ROOT / path, errors)
+
+
+def validate_codex_taxonomy(errors: list[str]) -> None:
+    """Keep public docs from marketing JAQ as a standalone Codex App."""
+    checked_paths = (
+        "README.md",
+        "site/index.html",
+        ".codex-plugin/plugin.json",
+        "docs/INSTALL.md",
+        "docs/PUBLISHING.md",
+        "docs/ARCHITECTURE.md",
+        "docs/RELEASE_PROCESS.md",
+        "DATA_CONTRACT.md",
+        "AGENTS.md",
+    )
+    forbidden = (
+        "Codex App",
+        "Codex app",
+        "codex app",
+        "Codex app/plugin",
+        "Codex plugin/app",
+        "Codex app package",
+    )
+    for relative_path in checked_paths:
+        path = ROOT / relative_path
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for phrase in forbidden:
+            if phrase in text:
+                errors.append(
+                    f"{relative_path} contains unsupported Codex taxonomy phrase: {phrase}"
+                )
 
 
 def validate_cli(errors: list[str]) -> None:
@@ -182,6 +216,7 @@ def validate() -> list[str]:
     validate_repo_marketplace(errors)
     validate_hooks(errors)
     validate_docs(errors)
+    validate_codex_taxonomy(errors)
     validate_cli(errors)
     validate_pages_site(errors)
     return errors
