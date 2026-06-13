@@ -73,15 +73,115 @@ EU_COUNTRIES = (
     "sweden",
 )
 
+AFRICA_COUNTRIES = (
+    "algeria",
+    "angola",
+    "benin",
+    "botswana",
+    "burkina faso",
+    "burundi",
+    "cameroon",
+    "cape verde",
+    "central african republic",
+    "chad",
+    "comoros",
+    "democratic republic of the congo",
+    "djibouti",
+    "egypt",
+    "equatorial guinea",
+    "eritrea",
+    "eswatini",
+    "ethiopia",
+    "gabon",
+    "gambia",
+    "ghana",
+    "guinea",
+    "guinea bissau",
+    "ivory coast",
+    "kenya",
+    "lesotho",
+    "liberia",
+    "libya",
+    "madagascar",
+    "malawi",
+    "mali",
+    "mauritania",
+    "mauritius",
+    "morocco",
+    "mozambique",
+    "namibia",
+    "niger",
+    "nigeria",
+    "republic of the congo",
+    "rwanda",
+    "sao tome and principe",
+    "senegal",
+    "seychelles",
+    "sierra leone",
+    "somalia",
+    "south africa",
+    "south sudan",
+    "sudan",
+    "tanzania",
+    "togo",
+    "tunisia",
+    "uganda",
+    "zambia",
+    "zimbabwe",
+)
+
+MIDDLE_EAST_COUNTRIES = (
+    "bahrain",
+    "iran",
+    "iraq",
+    "israel",
+    "jordan",
+    "kuwait",
+    "lebanon",
+    "oman",
+    "palestine",
+    "qatar",
+    "saudi arabia",
+    "syria",
+    "turkey",
+    "united arab emirates",
+    "yemen",
+)
+
+NON_EU_EUROPE_COUNTRIES = (
+    "albania",
+    "andorra",
+    "armenia",
+    "azerbaijan",
+    "belarus",
+    "bosnia and herzegovina",
+    "georgia",
+    "iceland",
+    "kosovo",
+    "liechtenstein",
+    "moldova",
+    "monaco",
+    "montenegro",
+    "north macedonia",
+    "norway",
+    "russia",
+    "san marino",
+    "serbia",
+    "switzerland",
+    "ukraine",
+    "vatican city",
+)
+
 COUNTRY_REGIONS = {country: {"eu", "europe", "emea"} for country in EU_COUNTRIES}
 COUNTRY_REGIONS.update(
     {
-        # EMEA includes Africa; this is intentionally broader than EU eligibility.
-        "nigeria": {"africa", "emea"},
         "united kingdom": {"uk", "europe", "emea"},
         "united states": {"us", "north america", "americas"},
     }
 )
+COUNTRY_REGIONS.update({country: {"africa", "emea"} for country in AFRICA_COUNTRIES})
+COUNTRY_REGIONS.update({country: {"middle east", "emea"} for country in MIDDLE_EAST_COUNTRIES})
+COUNTRY_REGIONS.update({country: {"europe", "emea"} for country in NON_EU_EUROPE_COUNTRIES})
 
 COUNTRY_ALIASES = {country: country for country in COUNTRY_REGIONS}
 COUNTRY_ALIASES.update(
@@ -90,12 +190,14 @@ COUNTRY_ALIASES.update(
         "gb": "united kingdom",
         "great britain": "united kingdom",
         "holland": "netherlands",
+        "republic of congo": "republic of the congo",
         "ng": "nigeria",
         "republic of ireland": "ireland",
         "the netherlands": "netherlands",
         "u k": "united kingdom",
         "u s": "united states",
         "u s a": "united states",
+        "uae": "united arab emirates",
         "uk": "united kingdom",
         "united states of america": "united states",
         "usa": "united states",
@@ -109,6 +211,10 @@ def normalize_label(value: object) -> str:
 
 def normalize_region(value: object) -> str:
     label = normalize_label(value)
+    if label.endswith(" only"):
+        base_label = label.removesuffix(" only").strip()
+        if base_label in REGION_ALIASES:
+            return REGION_ALIASES[base_label]
     return REGION_ALIASES.get(label, label)
 
 

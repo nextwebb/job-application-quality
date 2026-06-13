@@ -67,6 +67,27 @@ def main() -> None:
         role_with_regions(role, ["EU"]),
     )
 
+    south_africa_profile = profile_with_location(profile, "Cape Town, South Africa")
+    expect_pass(
+        "South Africa profile matches EMEA regional remote",
+        south_africa_profile,
+        role_with_regions(role, ["EMEA"]),
+    )
+
+    united_states_profile = profile_with_location(profile, "Austin, United States")
+    expect_pass(
+        "United States profile matches US-only remote",
+        united_states_profile,
+        role_with_regions(role, ["US only"]),
+    )
+
+    united_kingdom_profile = profile_with_location(profile, "London, United Kingdom")
+    expect_pass(
+        "United Kingdom profile matches UK-only remote",
+        united_kingdom_profile,
+        role_with_regions(role, ["UK only"]),
+    )
+
 
 if __name__ == "__main__":
     main()
