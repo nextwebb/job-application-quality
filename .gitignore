@@ -1,0 +1,26 @@
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Local tenants may contain real resumes, contacts, salary, and immigration data.
+tenants/
+
+# Generated application artifacts can contain personal data.
+outputs/
+generated/
+applications/
+
+# Secrets and local state.
+.env
+.env.*
+!.env.example
+*.log
+*.sqlite
+*.db
+

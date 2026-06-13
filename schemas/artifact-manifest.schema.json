@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ArtifactManifest",
+  "type": "object",
+  "required": ["tenant_id", "role_id", "generated_at", "inputs", "outputs", "policy_gates", "approval"],
+  "properties": {
+    "tenant_id": { "type": "string" },
+    "role_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "inputs": { "type": "object" },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "path", "sha256", "qa_status"],
+        "properties": {
+          "type": { "type": "string" },
+          "path": { "type": "string" },
+          "sha256": { "type": "string" },
+          "qa_status": { "enum": ["pass", "warn", "fail", "pending"] }
+        }
+      }
+    },
+    "policy_gates": { "type": "object" },
+    "approval": {
+      "type": "object",
+      "required": ["required", "status"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["pending", "approved", "rejected"] }
+      }
+    }
+  }
+}
+
