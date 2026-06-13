@@ -9,6 +9,8 @@ from common import fail, load_json
 
 
 ROOT = Path(__file__).resolve().parent.parent
+CODEX_PLUGIN_NAME = "job-application-quality"
+CODEX_MARKETPLACE_SOURCE_PATH = "./plugins/job-application-quality"
 
 
 def require_file(path: Path, errors: list[str]) -> None:
@@ -96,10 +98,43 @@ def validate_repo_marketplace(errors: list[str]) -> None:
     if entry.get("name") != "job-application-quality":
         errors.append(".agents/plugins/marketplace.json plugin name mismatch")
     source = entry.get("source", {})
-    if source.get("source") != "url":
-        errors.append(".agents/plugins/marketplace.json source.source must be url")
-    if source.get("url") != "https://github.com/nextwebb/job-application-quality.git":
-        errors.append(".agents/plugins/marketplace.json source.url mismatch")
+    if not isinstance(source, dict):
+        errors.append(".agents/plugins/marketplace.json source must be an object")
+        source = {}
+    if source.get("source") != "local":
+        errors.append(".agents/plugins/marketplace.json source.source must be local")
+    if source.get("path") != CODEX_MARKETPLACE_SOURCE_PATH:
+        errors.append(
+            ".agents/plugins/marketplace.json source.path must be "
+            f"{CODEX_MARKETPLACE_SOURCE_PATH}"
+        )
+    for unsupported_key in ("url", "ref"):
+        if unsupported_key in source:
+            errors.append(
+                ".agents/plugins/marketplace.json source must not contain "
+                f"{unsupported_key}"
+            )
+    raw_source_path = source.get("path")
+    if isinstance(raw_source_path, str):
+        if raw_source_path in ("", ".", "./"):
+            errors.append(".agents/plugins/marketplace.json source.path must not be empty")
+        plugin_root = (ROOT / raw_source_path).resolve()
+        source_path_inside_repo = True
+        try:
+            plugin_root.relative_to(ROOT.resolve())
+        except ValueError:
+            source_path_inside_repo = False
+            errors.append(".agents/plugins/marketplace.json source.path must stay inside repo")
+        if source_path_inside_repo:
+            plugin_manifest_path = plugin_root / ".codex-plugin" / "plugin.json"
+            require_file(plugin_manifest_path, errors)
+            if plugin_manifest_path.is_file():
+                plugin = load_json(plugin_manifest_path)
+                if plugin.get("name") != CODEX_PLUGIN_NAME:
+                    errors.append(
+                        ".agents/plugins/marketplace.json source.path must resolve to "
+                        f"{CODEX_PLUGIN_NAME} plugin"
+                    )
     policy = entry.get("policy", {})
     if policy.get("installation") != "AVAILABLE":
         errors.append(".agents/plugins/marketplace.json policy.installation must be AVAILABLE")

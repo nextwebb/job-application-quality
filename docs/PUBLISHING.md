@@ -22,14 +22,25 @@ The custom repo marketplace path lives at:
 .agents/plugins/marketplace.json
 ```
 
-It points to the GitHub repository root because this plugin lives at the root of the repo.
+It uses Codex CLI's local source shape and points to the repo-local plugin package path:
+
+```json
+{
+  "source": "local",
+  "path": "./plugins/job-application-quality"
+}
+```
+
 This is repository-scoped marketplace metadata, not a curated marketplace listing.
 
 Users can add it with:
 
 ```bash
-codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+codex marketplace add nextwebb/job-application-quality
 ```
+
+Do not publish or document a sparse checkout that only includes `.agents/plugins`; Codex must be
+able to resolve the local plugin source path from the marketplace clone.
 
 Then restart Codex and install **Job Application Quality** from the plugin directory.
 

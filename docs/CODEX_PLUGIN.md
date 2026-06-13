@@ -18,10 +18,12 @@ The `.app.json` file is companion metadata only. It helps Codex discover the pac
 The custom repo marketplace path can be added with:
 
 ```bash
-codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+codex marketplace add nextwebb/job-application-quality
 ```
 
-This path is repository-scoped marketplace metadata, not a curated marketplace listing.
+This path is repository-scoped marketplace metadata, not a curated marketplace listing. Its plugin
+entry uses Codex CLI's local source shape and resolves to `./plugins/job-application-quality`
+inside the marketplace clone.
 
 ## Validation
 

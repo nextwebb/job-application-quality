@@ -207,11 +207,15 @@ Codex will follow the skill workflow:
 
 For install details, see [docs/INSTALL.md](docs/INSTALL.md) and [docs/CODEX_PLUGIN.md](docs/CODEX_PLUGIN.md).
 
-Add the custom repo marketplace path in Codex builds that support repository marketplace sources:
+Add the custom repo marketplace in Codex CLI builds that support repository marketplace sources:
 
 ```bash
-codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+codex marketplace add nextwebb/job-application-quality
 ```
+
+The marketplace entry uses Codex CLI's local source shape and points at
+`./plugins/job-application-quality`, a repo-local package path. Do not use a sparse checkout that
+only includes `.agents/plugins`; the local plugin source must be present in the marketplace clone.
 
 ## Use With Claude
 
@@ -332,6 +336,8 @@ job-application-quality/
 +-- .app.json                               # Optional app manifest companion metadata
 +-- .agents/plugins/
 |   +-- marketplace.json                    # Custom repo marketplace metadata
++-- plugins/
+|   +-- job-application-quality -> ..       # Repo-local marketplace source path
 +-- .claude-plugin/
 |   +-- plugin.json                         # Claude plugin metadata
 |   +-- marketplace.json                    # Claude marketplace descriptor

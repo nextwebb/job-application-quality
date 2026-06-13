@@ -26,11 +26,15 @@ The custom repo marketplace path is:
 .agents/plugins/marketplace.json
 ```
 
-Add the custom repo marketplace path with:
+Add the custom repo marketplace with Codex CLI 0.121.0+:
 
 ```bash
-codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+codex marketplace add nextwebb/job-application-quality
 ```
+
+The marketplace entry uses `source: { "source": "local", "path":
+"./plugins/job-application-quality" }`. That path is a repo-local plugin package path, so a sparse
+checkout containing only `.agents/plugins` is not enough for installation.
 
 Then restart Codex and install **Job Application Quality** from the plugin directory.
 
