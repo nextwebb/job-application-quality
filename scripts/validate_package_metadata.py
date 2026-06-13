@@ -33,6 +33,17 @@ def validate_codex_app(errors: list[str]) -> None:
     plugin = load_json(ROOT / ".codex-plugin" / "plugin.json")
     if plugin.get("apps") != "./.app.json":
         errors.append(".codex-plugin/plugin.json must reference ./.app.json in apps")
+    for key in ("homepage", "repository", "license", "keywords"):
+        if key not in plugin:
+            errors.append(f".codex-plugin/plugin.json missing {key}")
+    interface = plugin.get("interface", {})
+    for key in ("websiteURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor", "composerIcon", "logo"):
+        if key not in interface:
+            errors.append(f".codex-plugin/plugin.json interface missing {key}")
+    for key in ("composerIcon", "logo"):
+        raw_path = interface.get(key)
+        if isinstance(raw_path, str) and raw_path.startswith("./"):
+            require_file(ROOT / raw_path[2:], errors)
 
 
 def validate_claude_plugin(errors: list[str]) -> None:
@@ -67,6 +78,56 @@ def validate_claude_plugin(errors: list[str]) -> None:
         errors.append(".claude-plugin/marketplace.json source must be ./")
 
 
+def validate_repo_marketplace(errors: list[str]) -> None:
+    path = ROOT / ".agents" / "plugins" / "marketplace.json"
+    require_file(path, errors)
+    if not path.is_file():
+        return
+    payload = load_json(path)
+    if payload.get("name") != "job-application-quality":
+        errors.append(".agents/plugins/marketplace.json name must be job-application-quality")
+    if payload.get("interface", {}).get("displayName") != "Job Application Quality":
+        errors.append(".agents/plugins/marketplace.json interface.displayName mismatch")
+    plugins = payload.get("plugins", [])
+    if not isinstance(plugins, list) or len(plugins) != 1:
+        errors.append(".agents/plugins/marketplace.json must contain exactly one plugin")
+        return
+    entry = plugins[0]
+    if entry.get("name") != "job-application-quality":
+        errors.append(".agents/plugins/marketplace.json plugin name mismatch")
+    source = entry.get("source", {})
+    if source.get("source") != "url":
+        errors.append(".agents/plugins/marketplace.json source.source must be url")
+    if source.get("url") != "https://github.com/nextwebb/job-application-quality.git":
+        errors.append(".agents/plugins/marketplace.json source.url mismatch")
+    policy = entry.get("policy", {})
+    if policy.get("installation") != "AVAILABLE":
+        errors.append(".agents/plugins/marketplace.json policy.installation must be AVAILABLE")
+    if policy.get("authentication") != "ON_INSTALL":
+        errors.append(".agents/plugins/marketplace.json policy.authentication must be ON_INSTALL")
+    if entry.get("category") != "Productivity":
+        errors.append(".agents/plugins/marketplace.json category must be Productivity")
+
+
+def validate_hooks(errors: list[str]) -> None:
+    hooks_path = ROOT / "hooks" / "hooks.json"
+    script_path = ROOT / "hooks" / "session_start_context.py"
+    require_file(hooks_path, errors)
+    require_file(script_path, errors)
+    if not hooks_path.is_file():
+        return
+    payload = load_json(hooks_path)
+    session_start = payload.get("hooks", {}).get("SessionStart")
+    if not isinstance(session_start, list) or not session_start:
+        errors.append("hooks/hooks.json must define hooks.SessionStart")
+        return
+    handler = session_start[0].get("hooks", [{}])[0]
+    if handler.get("type") != "command":
+        errors.append("hooks/hooks.json SessionStart handler must be a command hook")
+    if "$PLUGIN_ROOT/hooks/session_start_context.py" not in handler.get("command", ""):
+        errors.append("hooks/hooks.json must invoke session_start_context.py via PLUGIN_ROOT")
+
+
 def validate_docs(errors: list[str]) -> None:
     for path in (
         "CODE_OF_CONDUCT.md",
@@ -79,6 +140,7 @@ def validate_docs(errors: list[str]) -> None:
         "docs/CLAUDE_PLUGIN.md",
         "docs/ENGINEERING_RULES.md",
         "docs/DOCUMENTATION_RULES.md",
+        "docs/PUBLISHING.md",
         ".github/PULL_REQUEST_TEMPLATE.md",
     ):
         require_file(ROOT / path, errors)
@@ -88,6 +150,8 @@ def validate() -> list[str]:
     errors: list[str] = []
     validate_codex_app(errors)
     validate_claude_plugin(errors)
+    validate_repo_marketplace(errors)
+    validate_hooks(errors)
     validate_docs(errors)
     return errors
 

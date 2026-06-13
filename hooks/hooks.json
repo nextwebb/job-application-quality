@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/hooks/session_start_context.py\"",
+            "timeout": 10,
+            "statusMessage": "Loading Job Application Quality guardrails"
+          }
+        ]
+      }
+    ]
+  }
+}

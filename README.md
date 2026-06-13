@@ -42,7 +42,9 @@ The intended user is any candidate, recruiter-assistant workflow, or job-search 
 | --- | --- |
 | **Codex Skill** | Adds a `job-application-quality-gate` skill for CV, cover letter, email, ATS, and browser-assisted application workflows. |
 | **Codex App Package** | Adds `.app.json` alongside `.codex-plugin/plugin.json` for installable Codex app/plugin packaging. |
+| **Repo Marketplace** | Adds `.agents/plugins/marketplace.json` for repo-scoped Codex installation. |
 | **Claude Plugin Package** | Adds `.claude-plugin/plugin.json` and marketplace metadata for Claude plugin distribution. |
+| **Plugin Hooks** | Adds a lightweight startup hook that reinforces truthfulness and approval gates. |
 | **Open Agent Skill** | Adds a canonical `.agents/skills/job-application-quality/SKILL.md` router for multi-CLI use. |
 | **Multi-Tenant Profiles** | Keeps every candidate in an isolated profile with canonical facts, policy settings, baseline artifacts, and approved claims. |
 | **Role Intake Contract** | Normalizes job details into a small JSON file that can be checked before tailoring begins. |
@@ -121,6 +123,12 @@ Codex will follow the skill workflow:
 8. Stop before email send, final ATS submit, CAPTCHA, identity upload, or legal attestation unless explicitly approved.
 
 For install details, see [docs/INSTALL.md](docs/INSTALL.md) and [docs/CODEX_APP.md](docs/CODEX_APP.md).
+
+Install from the repo marketplace:
+
+```bash
+codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+```
 
 ## Use With Claude
 
@@ -232,9 +240,17 @@ job-application-quality/
 +-- .codex-plugin/
 |   +-- plugin.json                         # Codex plugin manifest
 +-- .app.json                               # Codex app companion manifest
++-- .agents/plugins/
+|   +-- marketplace.json                    # Repo marketplace metadata
 +-- .claude-plugin/
 |   +-- plugin.json                         # Claude plugin metadata
 |   +-- marketplace.json                    # Claude marketplace descriptor
++-- assets/
+|   +-- icon.svg                            # Install-surface icon
+|   +-- logo.svg                            # Install-surface logo
++-- hooks/
+|   +-- hooks.json                          # Plugin-bundled lifecycle hook config
+|   +-- session_start_context.py            # Startup context hook
 +-- .agents/
 |   +-- skills/job-application-quality/     # Canonical Open Agent Skill
 +-- .claude/
@@ -301,6 +317,7 @@ Real tenant data should stay local. The default `.gitignore` excludes `tenants/`
 - [Install](docs/INSTALL.md)
 - [Codex app](docs/CODEX_APP.md)
 - [Claude plugin](docs/CLAUDE_PLUGIN.md)
+- [Publishing](docs/PUBLISHING.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data contracts](docs/DATA_CONTRACT.md)
 - [Root data contract](DATA_CONTRACT.md)

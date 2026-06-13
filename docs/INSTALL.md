@@ -20,6 +20,20 @@ The Codex app companion manifest is:
 .app.json
 ```
 
+The repo marketplace is:
+
+```text
+.agents/plugins/marketplace.json
+```
+
+Install the repo marketplace with:
+
+```bash
+codex plugin marketplace add nextwebb/job-application-quality --sparse .agents/plugins
+```
+
+Then restart Codex and install **Job Application Quality** from the plugin directory.
+
 For local development, open this repository in Codex and use the plugin marketplace entry from your personal marketplace if installed. The local plugin also has a Codex-compatible skill at:
 
 ```text
@@ -48,6 +62,17 @@ The Claude skill wrapper is:
 ```
 
 The wrapper points to the canonical Open Agent Skill so Claude and other CLIs share the same behavior.
+
+## Hooks
+
+The plugin bundles a default startup hook:
+
+```text
+hooks/hooks.json
+hooks/session_start_context.py
+```
+
+Codex requires hook review and trust before non-managed command hooks run.
 
 ## Manual Use
 
