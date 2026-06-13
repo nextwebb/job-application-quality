@@ -16,6 +16,8 @@ GLOBAL_REMOTE_REGIONS = {"global", "worldwide", "world", "anywhere"}
 
 REGION_ALIASES = {
     "anywhere": "global",
+    "apac": "apac",
+    "asia pacific": "apac",
     "emea": "emea",
     "eu": "eu",
     "eu only": "eu",
@@ -23,6 +25,9 @@ REGION_ALIASES = {
     "europe middle east and africa": "emea",
     "european union": "eu",
     "global": "global",
+    "latin america": "latin america",
+    "latam": "latin america",
+    "north america": "north america",
     "remote worldwide": "worldwide",
     "uk": "uk",
     "united kingdom": "uk",
@@ -172,6 +177,68 @@ NON_EU_EUROPE_COUNTRIES = (
     "vatican city",
 )
 
+NORTH_AMERICA_COUNTRIES = (
+    "canada",
+    "mexico",
+)
+
+LATIN_AMERICA_COUNTRIES = (
+    "argentina",
+    "bahamas",
+    "barbados",
+    "belize",
+    "bolivia",
+    "brazil",
+    "chile",
+    "colombia",
+    "costa rica",
+    "cuba",
+    "dominica",
+    "dominican republic",
+    "ecuador",
+    "el salvador",
+    "grenada",
+    "guatemala",
+    "guyana",
+    "haiti",
+    "honduras",
+    "jamaica",
+    "nicaragua",
+    "panama",
+    "paraguay",
+    "peru",
+    "saint lucia",
+    "suriname",
+    "trinidad and tobago",
+    "uruguay",
+    "venezuela",
+)
+
+APAC_COUNTRIES = (
+    "australia",
+    "bangladesh",
+    "brunei",
+    "cambodia",
+    "china",
+    "hong kong",
+    "india",
+    "indonesia",
+    "japan",
+    "laos",
+    "malaysia",
+    "myanmar",
+    "nepal",
+    "new zealand",
+    "pakistan",
+    "philippines",
+    "singapore",
+    "south korea",
+    "sri lanka",
+    "taiwan",
+    "thailand",
+    "vietnam",
+)
+
 COUNTRY_REGIONS = {country: {"eu", "europe", "emea"} for country in EU_COUNTRIES}
 COUNTRY_REGIONS.update(
     {
@@ -182,6 +249,9 @@ COUNTRY_REGIONS.update(
 COUNTRY_REGIONS.update({country: {"africa", "emea"} for country in AFRICA_COUNTRIES})
 COUNTRY_REGIONS.update({country: {"middle east", "emea"} for country in MIDDLE_EAST_COUNTRIES})
 COUNTRY_REGIONS.update({country: {"europe", "emea"} for country in NON_EU_EUROPE_COUNTRIES})
+COUNTRY_REGIONS.update({country: {"north america", "americas"} for country in NORTH_AMERICA_COUNTRIES})
+COUNTRY_REGIONS.update({country: {"latin america", "americas"} for country in LATIN_AMERICA_COUNTRIES})
+COUNTRY_REGIONS.update({country: {"apac"} for country in APAC_COUNTRIES})
 
 COUNTRY_ALIASES = {country: country for country in COUNTRY_REGIONS}
 COUNTRY_ALIASES.update(
@@ -190,9 +260,13 @@ COUNTRY_ALIASES.update(
         "gb": "united kingdom",
         "great britain": "united kingdom",
         "holland": "netherlands",
+        "hong kong sar": "hong kong",
         "republic of congo": "republic of the congo",
         "ng": "nigeria",
+        "nz": "new zealand",
+        "prc": "china",
         "republic of ireland": "ireland",
+        "south korea": "south korea",
         "the netherlands": "netherlands",
         "u k": "united kingdom",
         "u s": "united states",
@@ -213,9 +287,10 @@ def normalize_region(value: object) -> str:
     label = normalize_label(value)
     if label.endswith(" only"):
         base_label = label.removesuffix(" only").strip()
-        if base_label in REGION_ALIASES:
-            return REGION_ALIASES[base_label]
-    return REGION_ALIASES.get(label, label)
+        if base_label in REGION_ALIASES or base_label in COUNTRY_ALIASES:
+            label = base_label
+    normalized = REGION_ALIASES.get(label, label)
+    return COUNTRY_ALIASES.get(normalized, normalized)
 
 
 def candidate_country(profile: dict) -> str | None:
@@ -234,8 +309,6 @@ def candidate_country(profile: dict) -> str | None:
         if f" {alias} " in full_location:
             return country
 
-    if labels and len(labels) > 1 and labels[0] not in LOCATION_NON_COUNTRIES:
-        return labels[0]
     return None
 
 

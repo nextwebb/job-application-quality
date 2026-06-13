@@ -88,6 +88,27 @@ def main() -> None:
         role_with_regions(role, ["UK only"]),
     )
 
+    uae_profile = profile_with_location(profile, "Dubai, United Arab Emirates")
+    expect_pass(
+        "United Arab Emirates profile matches UAE alias",
+        uae_profile,
+        role_with_regions(role, ["UAE"]),
+    )
+
+    czechia_profile = profile_with_location(profile, "Prague, Czech Republic")
+    expect_pass(
+        "Czechia profile matches Czech Republic alias",
+        czechia_profile,
+        role_with_regions(role, ["Czech Republic"]),
+    )
+
+    ambiguous_state_profile = profile_with_location(profile, "San Francisco, CA")
+    expect_fail(
+        "Ambiguous state suffix is not treated as verified country",
+        ambiguous_state_profile,
+        role_with_regions(role, ["CA"]),
+    )
+
 
 if __name__ == "__main__":
     main()
