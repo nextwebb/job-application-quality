@@ -1,0 +1,55 @@
+# Architecture
+
+The plugin is organized around tenant isolation and deterministic gates.
+
+```text
+tenant profile + role intake
+        |
+        v
+schema validation
+        |
+        v
+policy gates
+        |
+        v
+application packet
+        |
+        v
+artifact QA + manifest
+        |
+        v
+approval checklist
+        |
+        v
+manual/browser/email action
+```
+
+## Main Components
+
+- `.agents/skills/job-application-quality/SKILL.md`: canonical Open Agent Skill router for multi-CLI use.
+- `skills/job-application-quality-gate/SKILL.md`: Codex plugin compatibility wrapper.
+- `.codex-plugin/plugin.json` and `.app.json`: Codex plugin metadata plus optional app manifest companion metadata.
+- `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`: Claude plugin package metadata.
+- `.claude/skills/job-application-quality/SKILL.md` and `.qwen/skills/job-application-quality/SKILL.md`: CLI-specific wrappers that point to the canonical skill.
+- `schemas/`: JSON schemas for reusable data contracts.
+- `scripts/`: deterministic validators and packet builders.
+- `examples/`: fake tenant and role fixtures.
+- `docs/`: user-facing and maintainer-facing documentation.
+- `evals/`: quality rubric and fixtures for future automated checks.
+
+## Multi-Tenant Model
+
+Each candidate should live in a separate tenant directory:
+
+```text
+tenants/<tenant_id>/
+  profile.json
+  applications/<role_id>/
+    role-intake.json
+    outputs/
+    qa/
+    manifests/
+    logs/
+```
+
+Scripts accept explicit file paths and do not search across tenant directories. This keeps cross-tenant leakage out of the happy path.

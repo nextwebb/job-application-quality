@@ -1,0 +1,46 @@
+{
+  "name": "job-application-quality",
+  "version": "0.7.0",
+  "description": "CLI-first Codex plugin for reusable multi-tenant job application quality gates, packets, QA, hooks, and multi-CLI agent workflows.",
+  "author": {
+    "name": "Nextwebb",
+    "url": "https://github.com/nextwebb"
+  },
+  "homepage": "https://github.com/nextwebb/job-application-quality#readme",
+  "repository": "https://github.com/nextwebb/job-application-quality",
+  "license": "MIT",
+  "keywords": [
+    "job-applications",
+    "career",
+    "quality-gates",
+    "codex",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Job Application Quality",
+    "shortDescription": "Quality-first job application workflow with canonical facts and submission gates.",
+    "longDescription": "Job Application Quality helps Codex prepare role-specific application packets without inventing claims. It validates tenant facts, role evidence, sponsorship and remote-work gates, artifact quality, manifests, and approval requirements before an approved email send or browser final-submit step.",
+    "developerName": "Nextwebb",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Codex plugin package",
+      "Claude plugin",
+      "Hooks",
+      "Open Agent Skill",
+      "Multi-CLI routing",
+      "Local scripts",
+      "Quality gates",
+      "Multi-tenant profiles"
+    ],
+    "websiteURL": "https://github.com/nextwebb/job-application-quality",
+    "privacyPolicyURL": "https://github.com/nextwebb/job-application-quality/blob/main/docs/SECURITY_AND_PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/nextwebb/job-application-quality/blob/main/LEGAL_DISCLAIMER.md",
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "defaultPrompt": "Use jobqa to run preflight QA on this application packet before submission."
+  }
+}

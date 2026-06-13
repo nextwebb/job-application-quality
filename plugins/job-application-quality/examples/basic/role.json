@@ -1,0 +1,20 @@
+{
+  "role_id": "basic-backend-role",
+  "company": "Example Company",
+  "title": "Backend Engineer",
+  "job_url": "https://jobs.ashbyhq.com/example/basic",
+  "ats": "ashby",
+  "source_timestamp": "2026-06-13T00:00:00Z",
+  "location": "Remote",
+  "remote": {
+    "status": "global",
+    "allowed_regions": ["global"]
+  },
+  "sponsorship": {
+    "status": "not_required",
+    "evidence": "Global remote contractor setup supported."
+  },
+  "required_skills": ["Python", "AWS"],
+  "preferred_skills": ["PostgreSQL"],
+  "required_questions": []
+}
