@@ -1,6 +1,6 @@
 {
   "name": "job-application-quality",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Local-first job application quality gates for truthful packets, manifests, QA, and safe submission workflows.",
   "author": {
     "name": "Nextwebb",

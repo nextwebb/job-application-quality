@@ -10,8 +10,10 @@ Releases should be small, auditable, and safety-forward.
 - [ ] No-invented-claims checks pass.
 - [ ] Sponsorship and remote hard-fail tests pass.
 - [ ] Codex app metadata validates.
+- [ ] Repo marketplace metadata validates.
 - [ ] Claude plugin metadata validates.
 - [ ] Multi-CLI wrappers validate.
+- [ ] Plugin hooks validate.
 - [ ] Email send path remains approval-gated.
 - [ ] Browser final-submit path remains approval-gated.
 - [ ] Artifact manifest generated for every packet.

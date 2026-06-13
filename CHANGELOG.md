@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.0 - 2026-06-13
+
+### Added
+
+- Repo marketplace metadata at `.agents/plugins/marketplace.json`.
+- Install-surface assets under `assets/`.
+- Default plugin-bundled `SessionStart` hook under `hooks/hooks.json`.
+- Publishing documentation aligned with the official Codex plugin build guide.
+- Validator coverage for marketplace metadata, hook config, assets, and richer manifest metadata.
+
+### Changed
+
+- Codex plugin manifest now includes richer publisher, repository, legal, asset, and install-surface metadata.
+- CI now validates hook JSON and hook script output.
+
 ## 0.3.0 - 2026-06-13
 
 ### Added

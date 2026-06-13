@@ -1,10 +1,21 @@
 {
   "name": "job-application-quality",
-  "version": "0.3.0+codex.20260613002646",
-  "description": "Installable Codex app and Claude plugin for reusable multi-tenant job application quality gates, packets, QA, and multi-CLI agent workflows.",
+  "version": "0.4.0",
+  "description": "Installable Codex plugin for reusable multi-tenant job application quality gates, packets, QA, hooks, and multi-CLI agent workflows.",
   "author": {
-    "name": "Nextwebb"
+    "name": "Nextwebb",
+    "url": "https://github.com/nextwebb"
   },
+  "homepage": "https://github.com/nextwebb/job-application-quality#readme",
+  "repository": "https://github.com/nextwebb/job-application-quality",
+  "license": "MIT",
+  "keywords": [
+    "job-applications",
+    "career",
+    "quality-gates",
+    "codex",
+    "skills"
+  ],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
@@ -17,12 +28,19 @@
       "Skills",
       "Codex app",
       "Claude plugin",
+      "Hooks",
       "Open Agent Skill",
       "Multi-CLI routing",
       "Local scripts",
       "Quality gates",
       "Multi-tenant profiles"
     ],
+    "websiteURL": "https://github.com/nextwebb/job-application-quality",
+    "privacyPolicyURL": "https://github.com/nextwebb/job-application-quality/blob/main/docs/SECURITY_AND_PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/nextwebb/job-application-quality/blob/main/LEGAL_DISCLAIMER.md",
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
     "defaultPrompt": "Use Job Application Quality to prepare a role-specific application packet with canonical facts, QA, and a submission checklist."
   }
 }
