@@ -1,0 +1,54 @@
+{
+  "tenant_id": "sample_candidate",
+  "candidate_name": "Sample Candidate",
+  "canonical_facts_version": "v1",
+  "contact": {
+    "email": "candidate@example.com",
+    "phone": "+1 555 0100",
+    "current_location": "Lagos, Nigeria",
+    "linkedin": "https://www.linkedin.com/in/sample-candidate",
+    "github": "https://github.com/sample-candidate",
+    "portfolio": "https://example.com"
+  },
+  "work_authorization": {
+    "current_country": "authorized",
+    "requires_sponsorship_for_eu_uk_us": true,
+    "global_remote_contractor": true
+  },
+  "application_policy": {
+    "allowed_ats": ["ashby", "greenhouse", "lever"],
+    "skip_if_sponsorship_unavailable": true,
+    "skip_if_sponsorship_unknown_for_relocation": true,
+    "skip_if_remote_country_unverified": true,
+    "requires_explicit_submit_approval": true
+  },
+  "baseline_artifacts": [
+    {
+      "artifact_id": "backend_cv",
+      "type": "cv",
+      "path": "fixtures/sample-backend-cv.txt",
+      "role_family": "backend"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "backend_apis",
+      "text": "Built production backend APIs with Python and TypeScript.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "platform"]
+    },
+    {
+      "claim_id": "data_workflows",
+      "text": "Maintained cloud data workflows with orchestration, SQL, and CI/CD.",
+      "confidence": "verified",
+      "allowed_contexts": ["data", "platform"]
+    },
+    {
+      "claim_id": "postgresql",
+      "text": "Built backend services using PostgreSQL.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "data", "platform"]
+    }
+  ],
+  "forbidden_claims": ["PhD", "US citizen", "Kubernetes expert"]
+}

@@ -1,0 +1,23 @@
+{
+  "role_id": "sample-ai-backend",
+  "company": "Example AI",
+  "title": "Senior Backend Engineer",
+  "job_url": "https://jobs.ashbyhq.com/example-ai/sample",
+  "ats": "ashby",
+  "source_timestamp": "2026-06-13T00:00:00Z",
+  "location": "Remote EMEA",
+  "remote": {
+    "status": "regional",
+    "allowed_regions": ["EMEA"]
+  },
+  "sponsorship": {
+    "status": "not_required",
+    "evidence": "Global remote contractor setup supported."
+  },
+  "required_skills": ["Python", "TypeScript", "APIs", "PostgreSQL"],
+  "preferred_skills": ["LLM workflows", "AWS"],
+  "required_questions": [
+    "Can you overlap with US Eastern Time?"
+  ]
+}
+

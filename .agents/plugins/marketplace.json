@@ -7,9 +7,8 @@
     {
       "name": "job-application-quality",
       "source": {
-        "source": "url",
-        "url": "https://github.com/nextwebb/job-application-quality.git",
-        "ref": "main"
+        "source": "local",
+        "path": "./plugins/job-application-quality"
       },
       "policy": {
         "installation": "AVAILABLE",

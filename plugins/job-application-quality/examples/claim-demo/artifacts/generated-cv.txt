@@ -1,0 +1,6 @@
+Claim Demo Candidate
+Platform Engineer
+
+Summary
+Built serverless APIs with AWS Lambda and Python.
+Built Kubernetes production clusters for high-availability deployments.
