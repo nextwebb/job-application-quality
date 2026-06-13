@@ -136,14 +136,27 @@ def validate_docs(errors: list[str]) -> None:
         "TRADEMARK.md",
         "DATA_CONTRACT.md",
         "docs/INSTALL.md",
+        "docs/CLI.md",
         "docs/CODEX_APP.md",
         "docs/CLAUDE_PLUGIN.md",
         "docs/ENGINEERING_RULES.md",
         "docs/DOCUMENTATION_RULES.md",
         "docs/PUBLISHING.md",
         ".github/PULL_REQUEST_TEMPLATE.md",
+        "bin/jobqa",
     ):
         require_file(ROOT / path, errors)
+
+
+def validate_cli(errors: list[str]) -> None:
+    cli_path = ROOT / "bin" / "jobqa"
+    require_file(cli_path, errors)
+    if cli_path.is_file() and not cli_path.stat().st_mode & 0o111:
+        errors.append("bin/jobqa must be executable")
+    require_file(ROOT / "scripts" / "jobqa.py", errors)
+    require_file(ROOT / "examples" / "basic" / "candidate.json", errors)
+    require_file(ROOT / "examples" / "basic" / "role.json", errors)
+    require_file(ROOT / "examples" / "basic" / "artifacts" / "cv.txt", errors)
 
 
 def validate() -> list[str]:
@@ -153,6 +166,7 @@ def validate() -> list[str]:
     validate_repo_marketplace(errors)
     validate_hooks(errors)
     validate_docs(errors)
+    validate_cli(errors)
     return errors
 
 

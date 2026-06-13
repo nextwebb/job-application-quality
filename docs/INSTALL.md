@@ -83,6 +83,14 @@ git clone https://github.com/nextwebb/job-application-quality.git
 cd job-application-quality
 ```
 
+Run the CLI:
+
+```bash
+./bin/jobqa demo
+./bin/jobqa init /tmp/my-application
+./bin/jobqa run /tmp/my-application
+```
+
 Run the validation suite:
 
 ```bash

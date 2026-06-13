@@ -28,6 +28,25 @@ jobs:
           python3 hooks/session_start_context.py | python3 -m json.tool >/tmp/session-start-json-ok
       - name: Run unsupported claim demo
         run: python3 scripts/run_claim_demo.py
+      - name: Run jobqa CLI demo
+        run: ./bin/jobqa demo
+      - name: Run jobqa CLI happy path
+        run: |
+          rm -rf /tmp/jobqa-basic
+          cp -R examples/basic /tmp/jobqa-basic
+          ./bin/jobqa run /tmp/jobqa-basic
+          ./bin/jobqa report /tmp/jobqa-basic/output/manifest.json --format markdown
+          ./bin/jobqa qa /tmp/jobqa-basic/output/manifest.json --format json
+      - name: Run jobqa CLI failure path
+        run: |
+          rm -rf /tmp/jobqa-claim-fail
+          cp -R examples/claim-demo /tmp/jobqa-claim-fail
+          mv /tmp/jobqa-claim-fail/profile.json /tmp/jobqa-claim-fail/candidate.json
+          mv /tmp/jobqa-claim-fail/role-intake.json /tmp/jobqa-claim-fail/role.json
+          if ./bin/jobqa run /tmp/jobqa-claim-fail; then
+            echo "Expected unsafe packet to fail"
+            exit 1
+          fi
       - name: Check failing sponsorship gate
         run: |
           if python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.sponsorship-fail.json; then
