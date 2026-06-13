@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- README site preview screenshot and `jobqa` dry-run GIF.
+
 ## 0.7.0 - 2026-06-13
 
 ### Added

@@ -13,6 +13,8 @@
 
 Project site: https://nextwebb.github.io/job-application-quality/
 
+![JAQ GitHub Pages site preview](docs/assets/jaq-site-preview.png)
+
 AI can help with job applications. It can also quietly damage them.
 
 One weak CV, one unsupported claim, one wrong sponsorship answer, or one accidental submit can cost a real opportunity. **Job Application Quality** is the reusable guardrail layer for agents that prepare CVs, cover letters, recruiter emails, and application packets.
@@ -90,6 +92,8 @@ Run:
 ```bash
 ./bin/jobqa demo
 ```
+
+![jobqa dry run showing an unsupported claim blocked before submission](docs/assets/jobqa-dry-run.gif)
 
 The demo creates a packet where the candidate facts and generated CV disagree:
 
