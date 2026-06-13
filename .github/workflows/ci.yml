@@ -16,16 +16,8 @@ jobs:
         run: python3 scripts/validate_tenant_profile.py examples/tenant/profile.valid.json
       - name: Validate example role
         run: python3 scripts/validate_role_intake.py examples/role-intake.valid.json
-      - name: Check Lagos candidate passes EMEA regional remote gate
-        run: python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
-      - name: Check Lagos candidate passes worldwide remote gate
-        run: python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.remote-worldwide.json
-      - name: Check Lagos candidate fails EU-only remote gate
-        run: |
-          if python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.remote-eu-only.json; then
-            echo "Expected EU-only remote failure"
-            exit 1
-          fi
+      - name: Validate policy gate regressions
+        run: python3 scripts/validate_policy_gates.py
       - name: Validate multi-CLI support
         run: python3 scripts/validate_multi_cli_support.py
       - name: Validate package metadata

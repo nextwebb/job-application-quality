@@ -16,8 +16,11 @@ GLOBAL_REMOTE_REGIONS = {"global", "worldwide", "world", "anywhere"}
 
 REGION_ALIASES = {
     "anywhere": "global",
+    "emea": "emea",
     "eu": "eu",
     "eu only": "eu",
+    "europe middle east africa": "emea",
+    "europe middle east and africa": "emea",
     "european union": "eu",
     "global": "global",
     "remote worldwide": "worldwide",
@@ -28,6 +31,16 @@ REGION_ALIASES = {
     "united states": "us",
     "world": "worldwide",
     "worldwide": "worldwide",
+}
+
+LOCATION_NON_COUNTRIES = {
+    "anywhere",
+    "global",
+    "hybrid",
+    "onsite",
+    "remote",
+    "world",
+    "worldwide",
 }
 
 EU_COUNTRIES = (
@@ -104,7 +117,7 @@ def candidate_country(profile: dict) -> str | None:
     if not isinstance(location, str):
         return None
 
-    labels = [normalize_label(part) for part in reversed(location.split(","))]
+    labels = [normalize_label(part) for part in reversed(location.split(",")) if normalize_label(part)]
     labels.append(normalize_label(location))
     for label in labels:
         if label in COUNTRY_ALIASES:
@@ -114,7 +127,14 @@ def candidate_country(profile: dict) -> str | None:
     for alias, country in sorted(COUNTRY_ALIASES.items(), key=lambda item: len(item[0]), reverse=True):
         if f" {alias} " in full_location:
             return country
+
+    if labels and len(labels) > 1 and labels[0] not in LOCATION_NON_COUNTRIES:
+        return labels[0]
     return None
+
+
+def candidate_regions_for(country: str) -> set[str]:
+    return COUNTRY_REGIONS.get(country, set()) | {country}
 
 
 def add_remote_region_result(message: str, strict: bool, errors: list[str], warnings: list[str]) -> None:
@@ -163,15 +183,8 @@ def check(profile: dict, role: dict) -> dict:
                     warnings,
                 )
             else:
-                candidate_regions = COUNTRY_REGIONS.get(country, set())
-                if not candidate_regions:
-                    add_remote_region_result(
-                        f"Remote eligibility cannot be verified for tenant country '{country}'",
-                        strict_remote_country,
-                        errors,
-                        warnings,
-                    )
-                elif not (regions & candidate_regions):
+                candidate_regions = candidate_regions_for(country)
+                if not (regions & candidate_regions):
                     add_remote_region_result(
                         "Remote eligibility mismatch: "
                         f"tenant country '{country}' is not included in allowed regions {raw_regions}",
