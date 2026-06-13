@@ -15,19 +15,49 @@ CODEX_PLUGIN_PACKAGE_FILES = (
     ".codex-plugin/plugin.json",
     ".app.json",
     ".agents/skills/job-application-quality/SKILL.md",
+    ".claude/skills/job-application-quality/SKILL.md",
+    ".qwen/skills/job-application-quality/SKILL.md",
     "skills/job-application-quality-gate/SKILL.md",
     "scripts/jobqa.py",
     "schemas/tenant-profile.schema.json",
     "examples/basic/candidate.json",
     "hooks/hooks.json",
     "assets/icon.svg",
+    "AGENTS.md",
+    "CLAUDE.md",
 )
 PRIVATE_DATA_DIRS = ("tenants", "outputs", "generated", "applications", "packets", "submissions")
+PACKAGE_DOC_FILES = (
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "DATA_CONTRACT.md",
+    "LEGAL_DISCLAIMER.md",
+    "LICENSE",
+    "SECURITY.md",
+    "docs/INSTALL.md",
+    "docs/CLI.md",
+    "docs/assets/jaq-site-preview.png",
+    "docs/assets/jobqa-dry-run.gif",
+    "docs/CODEX_PLUGIN.md",
+    "docs/ENGINEERING_RULES.md",
+    "docs/DOCUMENTATION_RULES.md",
+    "docs/PUBLISHING.md",
+    "bin/jobqa",
+)
 
 
 def require_file(path: Path, errors: list[str]) -> None:
     if not path.is_file():
         errors.append(f"missing {path.relative_to(ROOT)}")
+
+
+def is_packaged_plugin_root() -> bool:
+    return (
+        ROOT.name == CODEX_PLUGIN_NAME
+        and (ROOT / ".codex-plugin" / "plugin.json").is_file()
+        and not (ROOT / ".agents" / "plugins" / "marketplace.json").exists()
+    )
 
 
 def validate_codex_app(errors: list[str]) -> None:
@@ -211,6 +241,11 @@ def validate_docs(errors: list[str]) -> None:
         require_file(ROOT / path, errors)
 
 
+def validate_package_docs(errors: list[str]) -> None:
+    for path in PACKAGE_DOC_FILES:
+        require_file(ROOT / path, errors)
+
+
 def validate_codex_taxonomy(errors: list[str]) -> None:
     """Keep public docs from marketing JAQ as a standalone Codex App."""
     checked_paths = (
@@ -272,9 +307,14 @@ def validate_pages_site(errors: list[str]) -> None:
 def validate() -> list[str]:
     errors: list[str] = []
     validate_codex_app(errors)
+    validate_hooks(errors)
+    if is_packaged_plugin_root():
+        validate_package_docs(errors)
+        validate_codex_taxonomy(errors)
+        validate_cli(errors)
+        return errors
     validate_claude_plugin(errors)
     validate_repo_marketplace(errors)
-    validate_hooks(errors)
     validate_docs(errors)
     validate_codex_taxonomy(errors)
     validate_cli(errors)
