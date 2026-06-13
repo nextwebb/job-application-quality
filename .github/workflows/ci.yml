@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate example tenant
+        run: python3 scripts/validate_tenant_profile.py examples/tenant/profile.valid.json
+      - name: Validate example role
+        run: python3 scripts/validate_role_intake.py examples/role-intake.valid.json
+      - name: Check passing policy gates
+        run: python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
+      - name: Check failing sponsorship gate
+        run: |
+          if python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.sponsorship-fail.json; then
+            echo "Expected sponsorship failure"
+            exit 1
+          fi
+      - name: Prepare sample packet
+        run: python3 scripts/prepare_application_packet.py examples/tenant/profile.valid.json examples/role-intake.valid.json /tmp/application-packet
+      - name: QA sample packet
+        run: python3 scripts/qa_artifacts.py /tmp/application-packet/manifest.json

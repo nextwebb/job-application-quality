@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RoleIntake",
+  "type": "object",
+  "required": ["role_id", "company", "title", "job_url", "ats", "location", "remote", "sponsorship", "required_skills"],
+  "properties": {
+    "role_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$" },
+    "company": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "job_url": { "type": "string", "minLength": 1 },
+    "ats": { "enum": ["ashby", "greenhouse", "lever", "workday", "other"] },
+    "source_timestamp": { "type": "string" },
+    "location": { "type": "string" },
+    "remote": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["global", "regional", "onsite", "hybrid", "unknown"] },
+        "allowed_regions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "sponsorship": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["available", "unavailable", "unknown", "not_required"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "required_skills": { "type": "array", "items": { "type": "string" } },
+    "preferred_skills": { "type": "array", "items": { "type": "string" } },
+    "required_questions": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

@@ -1,0 +1,13 @@
+Sample Candidate
+Senior Backend Engineer
+
+Summary
+Backend engineer with verified experience building production APIs, data workflows, and cloud deployment pipelines.
+
+Selected Experience
+- Built production backend APIs with Python and TypeScript.
+- Maintained cloud data workflows with orchestration, SQL, and CI/CD.
+
+Links
+- LinkedIn: https://www.linkedin.com/in/sample-candidate
+- GitHub: https://github.com/sample-candidate

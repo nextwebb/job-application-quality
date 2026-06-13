@@ -1,0 +1,23 @@
+{
+  "name": "job-application-quality",
+  "version": "0.1.0",
+  "description": "Reusable multi-tenant quality gates for job-application packets, CVs, cover letters, recruiter emails, and browser-assisted submissions.",
+  "author": {
+    "name": "Nextwebb"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Job Application Quality",
+    "shortDescription": "Quality-first job application workflow with canonical facts and submission gates.",
+    "longDescription": "Job Application Quality helps Codex prepare role-specific application packets without inventing claims. It validates tenant facts, role evidence, sponsorship and remote-work gates, artifact quality, manifests, and approval requirements before email or browser submission.",
+    "developerName": "Nextwebb",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Local scripts",
+      "Quality gates",
+      "Multi-tenant profiles"
+    ],
+    "defaultPrompt": "Use Job Application Quality to prepare a role-specific application packet with canonical facts, QA, and a submission checklist."
+  }
+}

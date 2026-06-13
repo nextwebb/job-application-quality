@@ -1,0 +1,21 @@
+{
+  "role_id": "sample-us-no-sponsor",
+  "company": "Example US",
+  "title": "Senior Backend Engineer",
+  "job_url": "https://jobs.lever.co/example/sample",
+  "ats": "lever",
+  "source_timestamp": "2026-06-13T00:00:00Z",
+  "location": "United States",
+  "remote": {
+    "status": "regional",
+    "allowed_regions": ["US"]
+  },
+  "sponsorship": {
+    "status": "unavailable",
+    "evidence": "Posting states sponsorship is unavailable."
+  },
+  "required_skills": ["Python"],
+  "preferred_skills": [],
+  "required_questions": []
+}
+
