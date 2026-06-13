@@ -11,8 +11,21 @@ from pathlib import Path
 from common import load_json, write_json
 
 
-PLACEHOLDERS = ["TODO", "TBD", "[company]", "[role]", "lorem ipsum"]
-PRIVATE_PATH_MARKERS = ["/Users/", "\\Users\\", "/home/"]
+PLACEHOLDER_PATTERNS = [
+    ("TODO", re.compile(r"\bTODO\b", re.IGNORECASE)),
+    ("TBD", re.compile(r"\bTBD\b", re.IGNORECASE)),
+    ("[company]", re.compile(re.escape("[company]"), re.IGNORECASE)),
+    ("[role]", re.compile(re.escape("[role]"), re.IGNORECASE)),
+    ("[COMPANY_NAME]", re.compile(re.escape("[COMPANY_NAME]"), re.IGNORECASE)),
+    ("[ROLE_TITLE]", re.compile(re.escape("[ROLE_TITLE]"), re.IGNORECASE)),
+    ("[HIRING_MANAGER]", re.compile(re.escape("[HIRING_MANAGER]"), re.IGNORECASE)),
+    ("lorem ipsum", re.compile(r"\blorem\s+ipsum\b", re.IGNORECASE)),
+]
+PRIVATE_PATH_PATTERNS = [
+    ("/Users/", re.compile(re.escape("/Users/"))),
+    ("/home/", re.compile(re.escape("/home/"))),
+    ("Windows user path", re.compile(r"(?i)(?:[A-Z]:)?\\Users\\|[A-Z]:/Users/")),
+]
 
 
 def normalize(value: str) -> str:
@@ -24,6 +37,14 @@ def read_text_artifact(path: Path) -> str:
         return path.read_text(encoding="utf-8")
     except UnicodeDecodeError:
         return ""
+
+
+def matching_placeholders(text: str) -> list[str]:
+    return [label for label, pattern in PLACEHOLDER_PATTERNS if pattern.search(text)]
+
+
+def matching_private_path_markers(text: str) -> list[str]:
+    return [label for label, pattern in PRIVATE_PATH_PATTERNS if pattern.search(text)]
 
 
 def resolve_input_path(manifest: dict, key: str) -> Path | None:
@@ -121,16 +142,19 @@ def qa(manifest: dict) -> dict:
             continue
         if path.stat().st_size == 0:
             errors.append(f"Empty artifact: {path}")
-        if any(marker in str(path) for marker in PRIVATE_PATH_MARKERS):
+        if matching_private_path_markers(str(path)):
             warnings.append(f"Manifest contains absolute local path: {path}")
         text = read_text_artifact(path)
         if text:
             artifact_texts.append(text)
+            for token in matching_placeholders(text):
+                errors.append(f"Placeholder found in artifact {path}: {token}")
+            for marker in matching_private_path_markers(text):
+                warnings.append(f"Artifact contains private local path marker {marker}: {path}")
 
     text_blob = json.dumps(manifest)
-    for token in PLACEHOLDERS:
-        if token.lower() in text_blob.lower():
-            errors.append(f"Placeholder found: {token}")
+    for token in matching_placeholders(text_blob):
+        errors.append(f"Placeholder found: {token}")
 
     claim_report = truth_checks(manifest, artifact_texts)
     for claim in claim_report["unsupported_claims"]:
