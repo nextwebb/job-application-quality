@@ -137,6 +137,8 @@ def validate_docs(errors: list[str]) -> None:
         "DATA_CONTRACT.md",
         "docs/INSTALL.md",
         "docs/CLI.md",
+        "docs/assets/jaq-site-preview.png",
+        "docs/assets/jobqa-dry-run.gif",
         "docs/CODEX_APP.md",
         "docs/CLAUDE_PLUGIN.md",
         "docs/ENGINEERING_RULES.md",
