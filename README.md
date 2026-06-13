@@ -1,12 +1,13 @@
 # Job Application Quality
 
-![Codex Plugin](https://img.shields.io/badge/Codex-Plugin-111111?style=flat)
-![Claude Plugin](https://img.shields.io/badge/Claude-Plugin-D97706?style=flat)
-![Skills](https://img.shields.io/badge/Skills-Enabled-2563eb?style=flat)
-![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat)
-![Release](https://img.shields.io/github/v/release/nextwebb/job-application-quality?style=flat)
-![CI](https://github.com/nextwebb/job-application-quality/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/nextwebb/job-application-quality/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nextwebb/job-application-quality/actions/workflows/ci.yml)
+[![Pages](https://github.com/nextwebb/job-application-quality/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/nextwebb/job-application-quality/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-0f766e.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](docs/INSTALL.md)
+[![Codex Plugin](https://img.shields.io/badge/Codex-plugin-111111)](docs/CODEX_PLUGIN.md)
+[![CLI: jobqa](https://img.shields.io/badge/CLI-jobqa-2563eb)](docs/CLI.md)
+[![Open Agent Skill](https://img.shields.io/badge/Open%20Agent%20Skill-enabled-7c3aed)](.agents/skills/job-application-quality/SKILL.md)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-16a34a)](CONTRIBUTING.md)
 
 **Preflight checks for AI-generated job applications.**
 
