@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 - 2026-06-13
+
+### Added
+
+- Static GitHub Pages site under `site/` for the JAQ project brief, PRD narrative, quality gates, CLI quick start, and unsupported-claim demo.
+- GitHub Pages deployment workflow using `actions/deploy-pages`.
+- `scripts/validate_site.py` to verify local site assets, anchors, and secret/config leakage.
+- CI coverage and PR checklist coverage for site validation.
+
 ## 0.6.0 - 2026-06-13
 
 ### Added

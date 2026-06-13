@@ -22,6 +22,8 @@ jobs:
         run: python3 scripts/validate_multi_cli_support.py
       - name: Validate package metadata
         run: python3 scripts/validate_package_metadata.py
+      - name: Validate GitHub Pages site
+        run: python3 scripts/validate_site.py
       - name: Validate hook JSON and script output
         run: |
           python3 -m json.tool hooks/hooks.json >/tmp/hooks-json-ok

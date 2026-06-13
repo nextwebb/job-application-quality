@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Job Application Quality (JAQ) | Preflight QA for AI job applications</title>
+    <meta
+      name="description"
+      content="JAQ is an open-source preflight QA layer for AI-generated job application packets. Check truth, policy fit, artifact quality, manifests, and approval before submission."
+    >
+    <meta name="theme-color" content="#0f766e">
+    <meta property="og:title" content="Job Application Quality (JAQ)">
+    <meta property="og:description" content="Preflight checks for AI-generated job applications.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nextwebb.github.io/job-application-quality/">
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-site-header>
+      <a class="brand" href="#top" aria-label="Job Application Quality home">
+        <img src="assets/icon.svg" alt="" width="34" height="34">
+        <span>JAQ</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#why">Why</a>
+        <a href="#gates">Gates</a>
+        <a href="#demo">Demo</a>
+        <a href="#cli">CLI</a>
+        <a href="#docs">Docs</a>
+      </nav>
+      <a class="header-link" href="https://github.com/nextwebb/job-application-quality">GitHub</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Open-source preflight QA layer</p>
+          <h1 id="hero-title">Job Application Quality</h1>
+          <p class="lead">
+            Stop unsupported claims, policy mismatches, and low-quality AI-generated application
+            packets before anything gets submitted.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button button-primary" href="#demo">
+              <span aria-hidden="true">▶</span>
+              Run the demo
+            </a>
+            <a class="button button-secondary" href="https://github.com/nextwebb/job-application-quality">
+              <span aria-hidden="true">⌘</span>
+              View repo
+            </a>
+          </div>
+          <dl class="hero-metrics" aria-label="JAQ quality states">
+            <div>
+              <dt>STOP</dt>
+              <dd>Unsupported claims</dd>
+            </div>
+            <div>
+              <dt>WARN</dt>
+              <dd>Weak or missing evidence</dd>
+            </div>
+            <div>
+              <dt>PASS</dt>
+              <dd>Review-ready packets</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-terminal" aria-label="JAQ command output">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>jobqa demo</strong>
+          </div>
+          <pre><code>$ ./bin/jobqa demo
+Candidate says:
+- AWS Lambda
+- Python
+- no Kubernetes experience
+
+Job requires:
+- Kubernetes
+- Terraform
+- AWS
+
+QA result:
+- STOP unsupported claim
+- WARN missing Terraform evidence
+- PASS AWS match</code></pre>
+        </div>
+      </section>
+
+      <section class="section flow-section" id="why" aria-labelledby="why-title">
+        <div class="section-heading">
+          <p class="eyebrow">Why this exists</p>
+          <h2 id="why-title">The missing quality gate between generation and submission.</h2>
+          <p>
+            Most job-search agents optimize for volume. JAQ optimizes for trust: every packet gets
+            checked against canonical facts, role requirements, policy constraints, and approval state.
+          </p>
+        </div>
+
+        <div class="flow-diagram" aria-label="JAQ workflow position">
+          <article>
+            <h3>AI job workflow</h3>
+            <ol>
+              <li>Finds role</li>
+              <li>Drafts CV</li>
+              <li>Drafts cover letter</li>
+              <li>Prepares packet</li>
+            </ol>
+          </article>
+          <article class="flow-focus">
+            <h3>job-application-quality</h3>
+            <ol>
+              <li>Checks truth</li>
+              <li>Checks policy fit</li>
+              <li>Checks artifact quality</li>
+              <li>Creates manifest</li>
+              <li>Requires approval</li>
+            </ol>
+          </article>
+          <article>
+            <h3>Human</h3>
+            <ol>
+              <li>Reviews</li>
+              <li>Approves</li>
+              <li>Submits</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="gates" aria-labelledby="gates-title">
+        <div class="section-heading">
+          <p class="eyebrow">Quality gates</p>
+          <h2 id="gates-title">The system fails loudly when a packet should not move forward.</h2>
+        </div>
+
+        <div class="gate-grid">
+          <article class="gate gate-stop">
+            <span class="status-label">STOP</span>
+            <h3>Hard fail</h3>
+            <ul>
+              <li>Unsupported candidate claim</li>
+              <li>Sponsorship or work authorization mismatch</li>
+              <li>Remote or location mismatch</li>
+              <li>Final submit without explicit approval</li>
+            </ul>
+          </article>
+          <article class="gate gate-warn">
+            <span class="status-label">WARN</span>
+            <h3>Review warning</h3>
+            <ul>
+              <li>Required skill lacks supporting evidence</li>
+              <li>Evidence is truthful but weak</li>
+              <li>Optional artifact is missing</li>
+              <li>Role fit needs human judgment</li>
+            </ul>
+          </article>
+          <article class="gate gate-pass">
+            <span class="status-label">PASS</span>
+            <h3>Review-ready</h3>
+            <ul>
+              <li>Claims map to canonical facts</li>
+              <li>Policy settings match role constraints</li>
+              <li>Manifest records exact inputs and outputs</li>
+              <li>Approval checkpoint remains explicit</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="section-heading">
+          <p class="eyebrow">Killer demo</p>
+          <h2 id="demo-title">A false Kubernetes claim gets stopped before submission.</h2>
+          <p>
+            This tiny scenario is the core promise: AI may generate confident text, but JAQ checks
+            whether the candidate profile actually supports it.
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <article>
+            <h3>Candidate facts</h3>
+            <ul class="check-list">
+              <li><span class="ok">PASS</span> AWS Lambda</li>
+              <li><span class="ok">PASS</span> Python</li>
+              <li><span class="bad">NO</span> Kubernetes experience</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Role requires</h3>
+            <ul class="check-list">
+              <li>Kubernetes</li>
+              <li>Terraform</li>
+              <li>AWS</li>
+            </ul>
+          </article>
+          <article>
+            <h3>AI-generated CV says</h3>
+            <p class="quote">"Built Kubernetes production clusters for high-availability deployments."</p>
+          </article>
+          <article class="result-panel">
+            <h3>QA result</h3>
+            <ul class="check-list">
+              <li><span class="bad">STOP</span> Unsupported claim</li>
+              <li><span class="warn">WARN</span> Missing Terraform evidence</li>
+              <li><span class="ok">PASS</span> AWS match</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section architecture-section" id="architecture" aria-labelledby="architecture-title">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2 id="architecture-title">Small contracts. Deterministic checks. Human approval.</h2>
+        </div>
+
+        <div class="architecture-grid">
+          <ol class="steps">
+            <li>
+              <strong>Intake</strong>
+              Load candidate profile and role JSON.
+            </li>
+            <li>
+              <strong>Validate</strong>
+              Run structural checks for facts, ATS, location, and requirements.
+            </li>
+            <li>
+              <strong>Gate</strong>
+              Block unsupported sponsorship, remote, ATS, or authorization paths.
+            </li>
+            <li>
+              <strong>QA</strong>
+              Inspect generated artifacts for placeholders, path leaks, and hallucinated claims.
+            </li>
+            <li>
+              <strong>Manifest</strong>
+              Record hashes, selected files, policy result, and approval state.
+            </li>
+          </ol>
+
+          <div class="schema-panel" aria-label="Manifest JSON preview">
+            <div class="terminal-bar terminal-bar-light">
+              <span></span>
+              <span></span>
+              <span></span>
+              <strong>manifest.json</strong>
+            </div>
+            <pre><code>{
+  "tenant_id": "candidate_a",
+  "role_id": "backend-platform-role",
+  "policy_gates": { "status": "pass" },
+  "outputs": [
+    { "type": "cv", "qa_status": "pending" }
+  ],
+  "approval": {
+    "required": true,
+    "status": "pending"
+  }
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section cli-section" id="cli" aria-labelledby="cli-title">
+        <div class="section-heading">
+          <p class="eyebrow">CLI first</p>
+          <h2 id="cli-title">One command path for humans, agents, and CI.</h2>
+          <p>
+            JAQ is dependency-light and local-first. The public CLI wraps the same deterministic
+            Python scripts that agents use under the hood.
+          </p>
+        </div>
+
+        <div class="command-panel">
+          <button class="copy-button" type="button" data-copy-target="quickstart">Copy</button>
+          <pre id="quickstart"><code>git clone https://github.com/nextwebb/job-application-quality.git
+cd job-application-quality
+
+./bin/jobqa demo
+./bin/jobqa init /tmp/my-application
+./bin/jobqa run /tmp/my-application
+./bin/jobqa report /tmp/my-application/output/manifest.json --format markdown</code></pre>
+        </div>
+
+        <div class="audience-grid">
+          <article>
+            <h3>Candidates</h3>
+            <p>Keep facts canonical and stop accidental exaggeration before review.</p>
+          </article>
+          <article>
+            <h3>Recruiters</h3>
+            <p>Manage multiple profiles without mixing facts or policy rules.</p>
+          </article>
+          <article>
+            <h3>Developers</h3>
+            <p>Add a pre-submit QA layer to Codex, Claude, or custom application agents.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section metrics-section" aria-labelledby="metrics-title">
+        <div class="section-heading">
+          <p class="eyebrow">Success metrics</p>
+          <h2 id="metrics-title">Measure trust, not just throughput.</h2>
+        </div>
+
+        <div class="metric-grid">
+          <article>
+            <span>01</span>
+            <h3>Hallucination rate</h3>
+            <p>Unsupported claims caught before final drafts leave the machine.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Unsafe applications blocked</h3>
+            <p>Roles stopped because of sponsorship, location, ATS, or approval mismatches.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>User trust</h3>
+            <p>Clear evidence that every application packet is truthful and reviewable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section docs-section" id="docs" aria-labelledby="docs-title">
+        <div class="section-heading">
+          <p class="eyebrow">Documentation</p>
+          <h2 id="docs-title">Install it as a CLI, Codex app, Claude plugin, or reusable skill.</h2>
+        </div>
+
+        <div class="doc-links">
+          <a href="https://github.com/nextwebb/job-application-quality#quick-start">Quick start</a>
+          <a href="https://github.com/nextwebb/job-application-quality/blob/main/docs/CLI.md">CLI</a>
+          <a href="https://github.com/nextwebb/job-application-quality/blob/main/docs/CODEX_APP.md">Codex app</a>
+          <a href="https://github.com/nextwebb/job-application-quality/blob/main/docs/CLAUDE_PLUGIN.md">Claude plugin</a>
+          <a href="https://github.com/nextwebb/job-application-quality/blob/main/docs/QUALITY_GATES.md">Quality gates</a>
+          <a href="https://github.com/nextwebb/job-application-quality/blob/main/docs/SECURITY_AND_PRIVACY.md">Security and privacy</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <img src="assets/logo.svg" alt="Job Application Quality" width="220" height="83">
+      <p>
+        Open source guardrails for AI-assisted job applications. Human approval remains the final gate.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

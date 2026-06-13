@@ -18,6 +18,7 @@
 - [ ] `python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json`
 - [ ] `python3 scripts/validate_multi_cli_support.py`
 - [ ] `python3 scripts/validate_package_metadata.py`
+- [ ] `python3 scripts/validate_site.py`
 - [ ] Negative sponsorship fixture still fails
 
 ## Data Safety
