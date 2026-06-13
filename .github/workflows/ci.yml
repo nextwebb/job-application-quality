@@ -26,6 +26,8 @@ jobs:
         run: |
           python3 -m json.tool hooks/hooks.json >/tmp/hooks-json-ok
           python3 hooks/session_start_context.py | python3 -m json.tool >/tmp/session-start-json-ok
+      - name: Run unsupported claim demo
+        run: python3 scripts/run_claim_demo.py
       - name: Check failing sponsorship gate
         run: |
           if python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.sponsorship-fail.json; then

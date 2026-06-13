@@ -7,6 +7,7 @@ Backend engineer with verified experience building production APIs, data workflo
 Selected Experience
 - Built production backend APIs with Python and TypeScript.
 - Maintained cloud data workflows with orchestration, SQL, and CI/CD.
+- Built backend services using PostgreSQL.
 
 Links
 - LinkedIn: https://www.linkedin.com/in/sample-candidate

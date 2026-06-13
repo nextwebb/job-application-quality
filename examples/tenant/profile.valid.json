@@ -42,6 +42,12 @@
       "text": "Maintained cloud data workflows with orchestration, SQL, and CI/CD.",
       "confidence": "verified",
       "allowed_contexts": ["data", "platform"]
+    },
+    {
+      "claim_id": "postgresql",
+      "text": "Built backend services using PostgreSQL.",
+      "confidence": "verified",
+      "allowed_contexts": ["backend", "data", "platform"]
     }
   ],
   "forbidden_claims": ["PhD", "US citizen", "Kubernetes expert"]

@@ -32,3 +32,35 @@ Artifacts should pass these checks:
 - No incorrect location or links
 - Required keywords represented naturally
 
+## Truth And Evidence Checks
+
+Artifact QA also compares generated text against the tenant profile and role intake:
+
+- Claims in `forbidden_claims` must not appear in generated artifacts.
+- Claims with `confidence: blocked` must not appear in generated artifacts.
+- Required role skills should have support in canonical candidate claims.
+- Required skills with no support are warnings unless they appear as unsupported claims.
+- Supported required skills are reported as matches.
+
+Example:
+
+```text
+Candidate facts:
+- AWS Lambda
+- Python
+- no Kubernetes experience
+
+Role requires:
+- Kubernetes
+- Terraform
+- AWS
+
+Generated CV says:
+- "Built Kubernetes production clusters for high-availability deployments."
+
+QA result:
+- unsupported claim: Kubernetes production clusters
+- missing Terraform evidence
+- AWS match
+- stop before submission
+```

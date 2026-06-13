@@ -1,6 +1,6 @@
 {
   "name": "job-application-quality",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Installable Codex plugin for reusable multi-tenant job application quality gates, packets, QA, hooks, and multi-CLI agent workflows.",
   "author": {
     "name": "Nextwebb",

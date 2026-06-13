@@ -9,6 +9,8 @@
 ![Release](https://img.shields.io/github/v/release/nextwebb/job-application-quality?style=flat)
 ![CI](https://github.com/nextwebb/job-application-quality/actions/workflows/ci.yml/badge.svg)
 
+**Preflight checks for AI-generated job applications.**
+
 AI can help with job applications. It can also quietly damage them.
 
 One weak CV, one unsupported claim, one wrong sponsorship answer, or one accidental submit can cost a real opportunity. **Job Application Quality** is the reusable guardrail layer for agents that prepare CVs, cover letters, recruiter emails, and application packets.
@@ -36,6 +38,29 @@ Instead of asking an agent to "just apply," you give it a quality system:
 
 The intended user is any candidate, recruiter-assistant workflow, or job-search agent that needs reusable rules for application quality across multiple people without mixing their data.
 
+## Why This Exists
+
+```text
+AI job workflow
+  -> finds role
+  -> drafts resume
+  -> drafts cover letter
+  -> prepares packet
+
+job-application-quality
+  -> checks truth
+  -> checks policy fit
+  -> checks artifact quality
+  -> creates manifest
+  -> requires approval
+
+human
+  -> reviews
+  -> submits
+```
+
+Most tools focus on generating more applications. This project owns the step before anything gets sent: validate the packet, make the risk visible, and stop if the application is not supportable.
+
 ## Features
 
 | Feature | Description |
@@ -50,11 +75,44 @@ The intended user is any candidate, recruiter-assistant workflow, or job-search 
 | **Role Intake Contract** | Normalizes job details into a small JSON file that can be checked before tailoring begins. |
 | **Policy Gates** | Blocks unsupported ATS values, unavailable sponsorship, unknown sponsorship for relocation-sensitive roles, and unverified remote eligibility. |
 | **Artifact Manifests** | Records profile hash, role hash, selected outputs, policy result, and approval status for traceability. |
-| **Artifact QA** | Catches missing files, empty outputs, placeholders, and local path leakage before upload or email. |
+| **Artifact QA** | Catches missing files, empty outputs, placeholders, unsupported claims, missing role evidence, and local path leakage before upload or email. |
 | **Email Drafting** | Creates recruiter email drafts without sending them. |
 | **Submission Logging** | Records destination, approval text, manifest hash, and outputs after explicit approval. |
 | **CI Fixtures** | Ships with passing and failing examples so workflow behavior is testable from day one. |
 | **Privacy Defaults** | Ignores real tenant data, generated artifacts, packets, logs, and local runtime files by default. |
+
+## Killer Demo
+
+Run:
+
+```bash
+python3 scripts/run_claim_demo.py
+```
+
+The demo creates a packet where the candidate facts and generated CV disagree:
+
+```text
+Candidate says:
+- AWS Lambda
+- Python
+- no Kubernetes experience
+
+Job requires:
+- Kubernetes
+- Terraform
+- AWS
+
+AI-generated CV says:
+- "Built Kubernetes production clusters for high-availability deployments."
+
+QA result:
+- ❌ unsupported claim: "Built Kubernetes production clusters for high-availability deployments."
+- ⚠️ missing Terraform evidence
+- ✅ AWS match
+- ⛔ stop before submission
+```
+
+That is the point of the project: before Codex, Claude, career-ops, or a custom job agent submits anything, run the preflight gate.
 
 ## Quick Start
 
@@ -73,6 +131,12 @@ python3 scripts/validate_role_intake.py examples/role-intake.valid.json
 python3 scripts/check_policy_gates.py examples/tenant/profile.valid.json examples/role-intake.valid.json
 python3 scripts/validate_multi_cli_support.py
 python3 scripts/validate_package_metadata.py
+```
+
+Run the claim-support demo:
+
+```bash
+python3 scripts/run_claim_demo.py
 ```
 
 Prepare and QA a sample packet:
